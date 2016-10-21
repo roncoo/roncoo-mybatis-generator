@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
@@ -18,10 +19,11 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  * @author Mr.von
  * @time 2014年11月6日 下午4:04:13
  */
-public class RoncooCommunity {
-
+public class RoncooAdminlteSpringmvc {
+	private static Logger logger = Logger.getLogger(RoncooAdminlteSpringmvc.class);  
+	
 	public static void main(String[] args) throws IOException, XMLParserException, InvalidConfigurationException, SQLException, InterruptedException {
-		System.out.println("Start generator ...");
+		logger.info("Start generator ...");
 		List<String> warnings = new ArrayList<String>();
 		boolean overwrite = true; // 是否覆盖原来的文件
 		File configFile = new File("D:/workspace-roncoo/roncoo-mybatis-generator/src/test/resources/roncoo-adminlte-springmvc.xml");
@@ -30,6 +32,6 @@ public class RoncooCommunity {
 		DefaultShellCallback callback = new DefaultShellCallback(overwrite);
 		MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
 		myBatisGenerator.generate(null);
-		System.out.println("Finish generator ...");
+		logger.info("Finish generator");
 	}
 }

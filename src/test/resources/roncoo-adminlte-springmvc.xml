@@ -9,9 +9,13 @@
 
 	<context id="MySql" targetRuntime="MyBatis3">
 		<!-- 插件配置 -->
+		<!-- 序列化插件 -->
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<!-- 分页插件 -->
 		<plugin type="org.mybatis.generator.plugins.PaginationPlugin" />
+		<!-- ToString插件 -->
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+		<!-- 添加注解插件 -->
 		<plugin type="org.mybatis.generator.plugins.AnnotationPlugin">
 			<property name="annotationClass" value="${AnnotationPlugin.annotationClass}" />
 			<property name="annotationName" value="${AnnotationPlugin.annotationName}" />
