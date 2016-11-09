@@ -15,9 +15,8 @@ import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
 /**
- * @功能描述 生成实体、接口和配置文件.
- * @author Mr.von
- * @time 2014年11月6日 下午4:04:13
+ * 龙果开源-后台管理系统
+ * @author wujing
  */
 public class RoncooAdminlteSpringmvc {
 	private static Logger logger = Logger.getLogger(RoncooAdminlteSpringmvc.class);  
