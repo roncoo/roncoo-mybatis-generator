@@ -27,6 +27,19 @@
 
 	<build>
 		<finalName>roncoo-mybatis-generator</finalName>
+		
+		<resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.dtd</include>
+                </includes>
+            </resource>
+        </resources>
+		
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
