@@ -54,8 +54,14 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		
-		<!-- 生成全部的表 -->
+		<!-- 1.生成全部的表，%是通配符 -->
 		<table tableName="%" />
+		
+		<!-- 2.指定生成某个表 -->
+		<!-- 
+		<table tableName="table1"></table>
+		<table tableName="table2"></table> 
+		-->
 		
 	</context>
 </generatorConfiguration>
