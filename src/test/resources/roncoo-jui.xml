@@ -55,7 +55,9 @@
 		</javaClientGenerator>
 		
 		<!-- 生成全部的表 -->
-		<table tableName="%" />
+		<!-- <table tableName="%" /> -->
+		
+		<table tableName="rc_report"></table>
 		
 	</context>
 </generatorConfiguration>
