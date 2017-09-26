@@ -1,0 +1,73 @@
+package ${package.Controller};
+
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ * $!{table.comment} 
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+	private final static String TARGETID = "#if(${package.ModuleName})${package.ModuleName}#end-#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end";
+
+	@RequestMapping("list")
+	public void list(){
+	
+	}
+	
+	@RequestMapping("add")
+	public void add(){
+	
+	}
+	
+	@ResponseBody
+	@RequestMapping("save")
+	public String save(){
+		return success(TARGETID);
+	}
+	
+	@ResponseBody
+	@RequestMapping("delete")
+	public String delete(){
+		return delete(TARGETID);
+	}
+	
+	@RequestMapping("edit")
+	public void edit(){
+	
+	}
+	
+	@ResponseBody
+	@RequestMapping("update")
+	public String update(){
+		return success(TARGETID);
+	}
+	
+	@RequestMapping("view")
+	public void view(){
+	
+	}
+	
+}

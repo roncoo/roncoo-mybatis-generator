@@ -56,8 +56,8 @@ public class MysqlGenerator {
 
 	private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
 	private static final String DB_USER_NAME = "root";
-	private static final String DB_PASSWORD = "www.roncoo.com";
-	private static final String DB_URL = "jdbc:mysql://192.168.1.215:3306/sande_message?characterEncoding=utf8";
+	private static final String DB_PASSWORD = "";
+	private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/rc_os_user?characterEncoding=utf8";
 
 	/**
 	 * 代码生成
@@ -149,6 +149,7 @@ public class MysqlGenerator {
 		};
 
 		List<FileOutConfig> list = new ArrayList<>();
+
 		list.add(new FileOutConfig("/templates/mapper.xml.vm") {
 			// 自定义输出文件目录
 			@Override
@@ -192,7 +193,7 @@ public class MysqlGenerator {
 		// 自定义模板配置，模板可以参考源码 /mybatis-plus/src/main/resources/template
 		// 使用 copy至您项目 src/main/resources/template 目录下，模板名称也可自定义如下配置：
 
-		// tc.setController("/template/controller.java.vm");
+		tc.setController("/template/controller.java.vm");
 		// tc.setEntity("...");
 		// tc.setMapper("...");
 		// tc.setXml("...");
