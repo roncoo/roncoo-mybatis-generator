@@ -1,0 +1,19 @@
+<div class="bjui-pageContent">
+	<form action="${base}#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/save" data-toggle="validate" method="post">
+#foreach($field in ${table.fields})
+#set($keyPropertyName=${field.propertyName})
+#set($bg='${bean.')
+#set($ed='}')
+		<div class="form-group">
+            <label class="control-label x85">${field.comment}：</label>
+            <input type="text" name="${keyPropertyName}" value="" placeholder="${field.comment}" size="20">
+        </div>
+#end
+	</form>
+</div>
+<div class="bjui-pageFooter">
+    <ul>
+        <li><button type="button" class="btn-close">取消</button></li>
+        <li><button type="submit" class="btn-default">保存</button></li>
+    </ul>
+</div>

@@ -1,0 +1,24 @@
+<div class="bjui-pageContent">
+	<form action="${base}#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/update" data-toggle="validate" method="post">
+		<input name="id" type="hidden" value="${bean.id}"/>
+#foreach($field in ${table.fields})
+#set($keyPropertyName=${field.propertyName})
+#set($bg='${bean.')
+#set($ed='}')
+#if(${field.keyIdentityFlag})
+## 主键不生成
+#elseif(${field.convert})
+		<div class="form-group">
+            <label class="control-label x85">${field.comment}：</label>
+            <input type="text" name="${keyPropertyName}" value="${bg}${keyPropertyName}${ed}" placeholder="${field.comment}" size="20">
+        </div>
+#end
+#end
+	</form>
+</div>
+<div class="bjui-pageFooter">
+    <ul>
+        <li><button type="button" class="btn-close">取消</button></li>
+        <li><button type="submit" class="btn-default">更新</button></li>
+    </ul>
+</div>
