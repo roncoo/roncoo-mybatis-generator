@@ -17,20 +17,30 @@
 	<table class="table table-bordered table-hover table-top" data-toggle="tablefixed" data-selected-multi="true">
 		<thead>
 			<tr>
+				<th width="30">序号</th>
 #foreach($field in ${table.fields})
+#if(${field.keyIdentityFlag})
+## 主键不生成
+#elseif(${field.convert})
 				<th>${field.comment}</th>
+#end
 #end
 			</tr>
 		</thead>
 		<tbody>
 			<\#if page??>
 			<#list page.list as bean>
-			<tr>
-#foreach($field in ${table.fields})
-#set($keyPropertyName=${field.propertyName})
 #set($bg='${bean.')
 #set($ed='}')
-				<td>${bg}${keyPropertyName}${ed}</td>
+#set($bi='${bean_index+1}')
+			<tr>
+				<td align="center">${bi}</td>
+#foreach($field in ${table.fields})
+#if(${field.keyIdentityFlag})
+## 主键不生成
+#elseif(${field.convert})
+				<td>${bg}${field.propertyName}${ed}</td>
+#end
 #end
 			</tr>
 			</#list>

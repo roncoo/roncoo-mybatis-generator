@@ -1,8 +1,8 @@
 <div class="bjui-pageContent">
-#foreach($field in ${table.fields})
-#set($keyPropertyName=${field.propertyName})
 #set($bg='${bean.')
 #set($ed='}')
+#foreach($field in ${table.fields})
+#set($keyPropertyName=${field.propertyName})
 #if(${field.keyIdentityFlag})
 ## 主键不生成
 #elseif(${field.convert})
