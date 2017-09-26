@@ -9,7 +9,7 @@
 			
 			<br />
 			<br />
-			<button type="button" class="btn btn-blue" data-url="organization/card/add.html" data-toggle="dialog" data-id="order-add" data-icon="plus">添加</button>
+			<button type="button" class="btn btn-blue" data-url="${base}#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/add" data-toggle="dialog" data-id="#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end-add" data-icon="plus">添加</button>
 		</div>
 	</form>
 </div>
@@ -17,22 +17,22 @@
 	<table class="table table-bordered table-hover table-top" data-toggle="tablefixed" data-selected-multi="true">
 		<thead>
 			<tr>
-		#foreach($field in ${table.fields})
-		<th>${field.comment}</th>
-		#end
-	</tr>
+#foreach($field in ${table.fields})
+				<th>${field.comment}</th>
+#end
+			</tr>
 		</thead>
 		<tbody>
 			<\#if page??>
 			<#list page.list as bean>
 			<tr>
-		#foreach($field in ${table.fields})
-		#set($keyPropertyName=${field.propertyName})
-		#set($bg='${bean.')
-		#set($ed='}')
-		<td>${bg}${keyPropertyName}${ed}</td>
-		#end
-	</tr>
+#foreach($field in ${table.fields})
+#set($keyPropertyName=${field.propertyName})
+#set($bg='${bean.')
+#set($ed='}')
+				<td>${bg}${keyPropertyName}${ed}</td>
+#end
+			</tr>
 			</#list>
 			</\#if>
 		</tbody>
