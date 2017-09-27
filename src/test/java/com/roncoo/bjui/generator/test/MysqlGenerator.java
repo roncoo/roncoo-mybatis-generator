@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.roncoo.bjui.generator;
+package com.roncoo.bjui.generator.test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,14 +47,17 @@ public class MysqlGenerator {
 	private static final String[] TABLES = new String[] {};
 	private static final String AUTHOR = "wujing";
 
+	// 包的根路径设置
 	private static final String PACKAGE_PATH = "com.roncoo.bjui.generator";
 	private static final String MODULE_NAME = "user";
 
+	// 文件保存的位置
 	private static final String OUTPUT_DIR = "D:/workspace/roncoo-bjui-generator/";
 	private static final String OUTPUT_DIR_JAVA = "src/main/java/";
 	private static final String OUTPUT_DIR_XML = "src/main/resources/mybatis/";
 	private static final String OUTPUT_DIR_FTL = "src/main/resources/templates/admin/";
 
+	// 数据库配置
 	private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
 	private static final String DB_USER_NAME = "root";
 	private static final String DB_PASSWORD = "";
