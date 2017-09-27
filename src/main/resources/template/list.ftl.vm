@@ -1,5 +1,7 @@
+<\#include "/macro/base.ftl" />
 <div class="bjui-pageHeader">
 	<form id="pagerForm" data-toggle="ajaxsearch" action="${base}#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/list" method="post">
+		<@pageHeadr />
 		<div class="bjui-searchBar">
 			<label>账号：</label>
 			<input type="text" name="number" value="" class="form-control" size="10">&nbsp;
@@ -48,3 +50,4 @@
 		</tbody>
 	</table>
 </div>
+<@pageFooter />

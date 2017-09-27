@@ -42,8 +42,9 @@ public class ${table.controllerName} {
 	private ${entity}Biz biz;
 	
 	@RequestMapping("/list")
-	public void list(ModelMap modelMap){
-		modelMap.put("page", null);
+	public void list(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent, @RequestParam(value = "pageSize", defaultValue = "20") int pageSize, @ModelAttribute ${entity} entity, ModelMap modelMap){
+		modelMap.put("page", biz.listForPage(pageCurrent, pageSize, entity));
+		modelMap.put("bean", entity);
 	}
 	
 	@RequestMapping("/add")
@@ -63,7 +64,7 @@ public class ${table.controllerName} {
 	@ResponseBody
 	@RequestMapping("/delete")
 	public String delete(@RequestParam(value = "id") Long id){
-		if (biz.delete(id)) {
+		if (biz.deleteById(id)) {
 			return delete(TARGETID);
 		}
 		return error("删除失败");
@@ -71,13 +72,13 @@ public class ${table.controllerName} {
 	
 	@RequestMapping("/edit")
 	public void edit(@RequestParam(value = "id") Long id, ModelMap modelMap){
-		modelMap.put("bean", biz.get(id));
+		modelMap.put("bean", biz.getById(id));
 	}
 	
 	@ResponseBody
 	@RequestMapping("/update")
 	public String update(@ModelAttribute ${entity} entity){
-		if (biz.update(entity)) {
+		if (biz.updateById(entity)) {
 			return success(TARGETID);
 		}
 		return error("修改失败");
@@ -85,7 +86,7 @@ public class ${table.controllerName} {
 	
 	@RequestMapping("/view")
 	public void view(@RequestParam(value = "id") Long id, ModelMap modelMap){
-		modelMap.put("bean", biz.get(id));
+		modelMap.put("bean", biz.getById(id));
 	}
 	
 }
