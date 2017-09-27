@@ -1,0 +1,42 @@
+package ${package.Biz};
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.baomidou.mybatisplus.plugins.Page;
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+
+/**
+ * $!{table.comment} 
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Component
+public class ${entity}Biz {
+
+	@Autowired
+	private ${table.serviceName} service;
+
+	public Page<${entity}> list() {
+		return service.selectPage(null, null);
+	}
+
+	public boolean save(${entity} entity) {
+		return service.insert(entity);
+	}
+
+	public boolean delete(Long id) {
+		return service.deleteById(id);
+	}
+
+	public ${entity} get(Long id) {
+		return service.selectById(id);
+	}
+
+	public boolean update(${entity} entity) {
+		return service.updateById(entity);
+	}
+	
+}

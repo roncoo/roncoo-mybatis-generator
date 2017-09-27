@@ -19,6 +19,6 @@
 <div class="bjui-pageFooter">
     <ul>
         <li><button type="button" class="btn-close">取消</button></li>
-        <li><button type="submit" class="btn-default">更新</button></li>
+        <li><button type="submit" class="btn-default">修改</button></li>
     </ul>
 </div>

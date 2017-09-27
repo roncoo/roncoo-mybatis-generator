@@ -35,6 +35,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.toolkit.StringUtils;
 
 /**
  * 代码生成器-mysql
@@ -47,7 +48,7 @@ public class MysqlGenerator {
 	private static final String AUTHOR = "wujing";
 
 	private static final String PACKAGE_PATH = "com.roncoo.bjui.generator";
-	private static final String MODULE_NAME = "biz";
+	private static final String MODULE_NAME = "user";
 
 	private static final String OUTPUT_DIR = "D:/workspace/roncoo-bjui-generator/";
 	private static final String OUTPUT_DIR_JAVA = "src/main/java/";
@@ -144,6 +145,13 @@ public class MysqlGenerator {
 			public void initMap() {
 				Map<String, Object> map = new HashMap<>();
 				map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
+				if (StringUtils.isEmpty(MODULE_NAME)) {
+					this.getConfig().getPackageInfo().put("Biz", PACKAGE_PATH + ".biz");
+					this.getConfig().getPackageInfo().put("Ctl", PACKAGE_PATH + ".controller");
+				} else {
+					this.getConfig().getPackageInfo().put("Biz", PACKAGE_PATH + "." + MODULE_NAME + ".biz");
+					this.getConfig().getPackageInfo().put("Ctl", PACKAGE_PATH + "." + MODULE_NAME + ".controller");
+				}
 				this.setMap(map);
 			}
 		};
@@ -155,6 +163,27 @@ public class MysqlGenerator {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return OUTPUT_DIR + OUTPUT_DIR_XML + tableInfo.getEntityName() + ".xml";
+			}
+		});
+		list.add(new FileOutConfig("/template/biz.java.vm") {
+			// 自定义输出文件目录
+			@Override
+			public String outputFile(TableInfo tableInfo) {
+				if (StringUtils.isEmpty(MODULE_NAME)) {
+					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/biz/" + tableInfo.getEntityName() + "Biz.java";
+				} else {
+					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/" + MODULE_NAME + "/biz/" + tableInfo.getEntityName() + "Biz.java";
+				}
+			}
+		});
+		list.add(new FileOutConfig("/template/controller.java.vm") {
+			// 自定义输出文件目录
+			@Override
+			public String outputFile(TableInfo tableInfo) {
+				if (StringUtils.isEmpty(MODULE_NAME)) {
+					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/controller/" + tableInfo.getEntityName() + "Controller.java";
+				}
+				return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/" + MODULE_NAME + "/controller/" + tableInfo.getEntityName() + "Controller.java";
 			}
 		});
 		list.add(new FileOutConfig("/template/list.ftl.vm") {
@@ -190,10 +219,9 @@ public class MysqlGenerator {
 		// 关闭默认 xml 生成，调整生成 至 根目录
 		TemplateConfig tc = new TemplateConfig();
 		tc.setXml(null);
+		tc.setController(null);
 		// 自定义模板配置，模板可以参考源码 /mybatis-plus/src/main/resources/template
 		// 使用 copy至您项目 src/main/resources/template 目录下，模板名称也可自定义如下配置：
-
-		tc.setController("/template/controller.java.vm");
 		// tc.setEntity("...");
 		// tc.setMapper("...");
 		// tc.setXml("...");
