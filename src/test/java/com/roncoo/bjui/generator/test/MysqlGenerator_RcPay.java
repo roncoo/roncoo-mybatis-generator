@@ -42,29 +42,27 @@ import com.baomidou.mybatisplus.toolkit.StringUtils;
  * 
  * @author wujing
  */
-public class MysqlGenerator {
+public class MysqlGenerator_RcPay {
 
 	private static final String[] TABLES = new String[] {};
 	private static final String AUTHOR = "wujing";
 
 	// 包的根路径设置
-	private static final String PACKAGE_PATH = "com.roncoo.bjui.generator";
-	private static final String MODULE_NAME = "user";
+	private static final String PACKAGE_PATH = "com.roncoo.pay";
+	private static final String MODULE_NAME = "common";
+	private static final String SUPERCONTROLLERCLASS = "com.roncoo.pay.common.custom.base";
 
 	// 文件保存的位置
-	private static final String OUTPUT_DIR = "D:/workspace/roncoo-bjui-generator/";
+	private static final String OUTPUT_DIR = "D:/workspace/rc-pay/rc-pay-common/";
 	private static final String OUTPUT_DIR_JAVA = "src/main/java/";
 	private static final String OUTPUT_DIR_XML = "src/main/resources/mybatis/";
-	private static final String OUTPUT_DIR_FTL = "src/main/resources/templates/admin/";
+	private static final String OUTPUT_DIR_FTL = "src/main/resources/templates/" + MODULE_NAME + "/";
 
 	// 数据库配置
 	private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
 	private static final String DB_USER_NAME = "root";
 	private static final String DB_PASSWORD = "";
-	private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/rc_os_user?characterEncoding=utf8";
-	// private static final String DB_PASSWORD = "www.roncoo.com";
-	// private static final String DB_URL =
-	// "jdbc:mysql://192.168.1.215:3306/roncoo_college_boss?characterEncoding=utf8";
+	private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/rc_os_pay?characterEncoding=utf8";
 
 	/**
 	 * 代码生成
@@ -87,8 +85,8 @@ public class MysqlGenerator {
 		// 自定义文件命名，注意 %s 会自动填充表实体属性！
 		// gc.setMapperName("%sDao");
 		// gc.setXmlName("%sDao");
-		// gc.setServiceName("MP%sService");
-		// gc.setServiceImplName("%sServiceDiy");
+		gc.setServiceName("%sDao");
+		gc.setServiceImplName("%sDaoImpl");
 		// gc.setControllerName("%sAction");
 
 		// 数据源配置
@@ -126,7 +124,7 @@ public class MysqlGenerator {
 		// 自定义 service 实现类父类
 		// sc.setSuperServiceImplClass("com.baomidou.demo.TestServiceImpl");
 		// 自定义 controller 父类
-		sc.setSuperControllerClass("com.roncoo.bjui.generator.custom.BaseController");
+		sc.setSuperControllerClass(SUPERCONTROLLERCLASS);
 		// 【实体】是否生成字段常量（默认 false）
 		// public static final String ID = "test_id";
 		// sc.setEntityColumnConstant(true);
@@ -168,14 +166,14 @@ public class MysqlGenerator {
 
 		List<FileOutConfig> list = new ArrayList<>();
 
-		list.add(new FileOutConfig("/templates/mapper.xml.vm") {
+		list.add(new FileOutConfig("/template/mapper.xml.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return OUTPUT_DIR + OUTPUT_DIR_XML + tableInfo.getEntityName() + ".xml";
 			}
 		});
-		list.add(new FileOutConfig("/template/biz.java.vm") {
+		/*list.add(new FileOutConfig("/template/biz.java.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
@@ -220,30 +218,30 @@ public class MysqlGenerator {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityName() + "/list.ftl";
+				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityPath() + "/list.ftl";
 			}
 		});
 		list.add(new FileOutConfig("/template/add.ftl.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityName() + "/add.ftl";
+				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityPath() + "/add.ftl";
 			}
 		});
 		list.add(new FileOutConfig("/template/edit.ftl.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityName() + "/edit.ftl";
+				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityPath() + "/edit.ftl";
 			}
 		});
 		list.add(new FileOutConfig("/template/view.ftl.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityName() + "/view.ftl";
+				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityPath() + "/view.ftl";
 			}
-		});
+		});*/
 		ic.setFileOutConfigList(list);
 
 		// 关闭默认 xml 生成，调整生成 至 根目录
@@ -252,11 +250,10 @@ public class MysqlGenerator {
 		tc.setController(null);
 		// 自定义模板配置，模板可以参考源码 /mybatis-plus/src/main/resources/template
 		// 使用 copy至您项目 src/main/resources/template 目录下，模板名称也可自定义如下配置：
-		// tc.setEntity("...");
-		// tc.setMapper("...");
-		// tc.setXml("...");
-		// tc.setService("...");
-		// tc.setServiceImpl("...");
+		tc.setEntity("/template/entity.java.vm");
+		tc.setMapper("/template/mapper.java.vm");
+		tc.setService("/template/service.java.vm");
+		tc.setServiceImpl("/template/serviceImpl.java.vm");
 
 		// 代码生成器
 		AutoGenerator ag = new AutoGenerator();

@@ -1,12 +1,17 @@
 package ${package.Biz};
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.roncoo.bjui.generator.custom.PageBjui;
+import com.roncoo.bjui.generator.custom.PageUtil;
 import ${package.Entity}.${entity};
+import ${package.Qo}.${entity}QO;
 import ${package.Service}.${table.serviceName};
+import ${package.Vo}.${entity}VO;
 
 /**
  * $!{table.comment} 
@@ -20,13 +25,18 @@ public class ${entity}Biz {
 	@Autowired
 	private ${table.serviceName} service;
 
-	public Page<${entity}> listForPage(int current, int size, ${entity} entity) {
+	public PageBjui<${entity}VO> listForPage(int current, int size, ${entity}QO qo) {
+	    ${entity} entity = new ${entity}();
+	    BeanUtils.copyProperties(qo, entity);
 		Page<${entity}> page = new Page<>(current, size);
 		EntityWrapper<${entity}> wrapper = new EntityWrapper<>(entity);
-		return service.selectPage(page, wrapper);
+		page = service.selectPage(page, wrapper);
+        return PageUtil.transform(page, ${entity}VO.class);
 	}
 
-	public boolean save(${entity} entity) {
+	public boolean save(${entity}QO qo) {
+	    ${entity} entity = new ${entity}();
+        BeanUtils.copyProperties(qo, entity);
 		return service.insert(entity);
 	}
 
@@ -34,11 +44,16 @@ public class ${entity}Biz {
 		return service.deleteById(id);
 	}
 
-	public ${entity} getById(Long id) {
-		return service.selectById(id);
+	public ${entity}VO getById(Long id) {
+	    ${entity}VO vo = new ${entity}VO();
+	    ${entity} entity = service.selectById(id);
+        BeanUtils.copyProperties(entity, vo);
+		return vo;
 	}
 
-	public boolean updateById(${entity} entity) {
+	public boolean updateById(${entity}QO qo) {
+	    ${entity} entity = new ${entity}();
+        BeanUtils.copyProperties(qo, entity);
 		return service.updateById(entity);
 	}
 	

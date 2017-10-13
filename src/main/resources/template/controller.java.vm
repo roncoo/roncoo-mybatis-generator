@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ${package.Biz}.${entity}Biz;
-import ${package.Entity}.${entity};
+import ${package.Qo}.${entity}QO;
 #if(${superControllerClassPackage})
 import ${superControllerClassPackage};
 #end
@@ -42,9 +42,9 @@ public class ${table.controllerName} {
 	private ${entity}Biz biz;
 	
 	@RequestMapping("/list")
-	public void list(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent, @RequestParam(value = "pageSize", defaultValue = "20") int pageSize, @ModelAttribute ${entity} entity, ModelMap modelMap){
-		modelMap.put("page", biz.listForPage(pageCurrent, pageSize, entity));
-		modelMap.put("bean", entity);
+	public void list(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent, @RequestParam(value = "pageSize", defaultValue = "20") int pageSize, @ModelAttribute ${entity}QO qo, ModelMap modelMap){
+		modelMap.put("page", biz.listForPage(pageCurrent, pageSize, qo));
+		modelMap.put("bean", qo);
 	}
 	
 	@RequestMapping("/add")
@@ -54,8 +54,8 @@ public class ${table.controllerName} {
 	
 	@ResponseBody
 	@RequestMapping("/save")
-	public String save(@ModelAttribute ${entity} entity){
-		if (biz.save(entity)) {
+	public String save(@ModelAttribute ${entity}QO qo){
+		if (biz.save(qo)) {
 			return success(TARGETID);
 		}
 		return error("添加失败");
@@ -77,8 +77,8 @@ public class ${table.controllerName} {
 	
 	@ResponseBody
 	@RequestMapping("/update")
-	public String update(@ModelAttribute ${entity} entity){
-		if (biz.updateById(entity)) {
+	public String update(@ModelAttribute ${entity}QO qo){
+		if (biz.updateById(qo)) {
 			return success(TARGETID);
 		}
 		return error("修改失败");
