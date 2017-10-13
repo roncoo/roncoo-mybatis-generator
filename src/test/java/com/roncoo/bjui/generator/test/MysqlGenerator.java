@@ -252,11 +252,10 @@ public class MysqlGenerator {
 		tc.setController(null);
 		// 自定义模板配置，模板可以参考源码 /mybatis-plus/src/main/resources/template
 		// 使用 copy至您项目 src/main/resources/template 目录下，模板名称也可自定义如下配置：
-		// tc.setEntity("...");
-		// tc.setMapper("...");
-		// tc.setXml("...");
-		// tc.setService("...");
-		// tc.setServiceImpl("...");
+		tc.setEntity("/template/entity.java.vm");
+		tc.setMapper("/template/mapper.java.vm");
+		tc.setService("/template/service.java.vm");
+		tc.setServiceImpl("/template/serviceImpl.java.vm");
 
 		// 代码生成器
 		AutoGenerator ag = new AutoGenerator();
