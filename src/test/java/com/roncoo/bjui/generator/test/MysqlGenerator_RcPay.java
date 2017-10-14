@@ -142,6 +142,8 @@ public class MysqlGenerator_RcPay {
 		PackageConfig pc = new PackageConfig();
 		pc.setParent(PACKAGE_PATH);// 自定义包路径
 		pc.setModuleName(MODULE_NAME);
+		pc.setService("dao");
+		pc.setServiceImpl("dao.impl");
 
 		// 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
 		InjectionConfig ic = new InjectionConfig() {
