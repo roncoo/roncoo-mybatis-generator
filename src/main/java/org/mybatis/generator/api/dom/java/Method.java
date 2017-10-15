@@ -27,279 +27,299 @@ import org.mybatis.generator.api.dom.OutputUtilities;
  */
 public class Method extends JavaElement {
 
-    private List<String> bodyLines;
+	private List<String> bodyLines;
 
-    private boolean constructor;
+	private boolean constructor;
 
-    private FullyQualifiedJavaType returnType;
+	private FullyQualifiedJavaType returnType;
 
-    private String name;
+	private String name;
 
-    private List<Parameter> parameters;
+	private List<Parameter> parameters;
 
-    private List<FullyQualifiedJavaType> exceptions;
-    
-    private boolean isSynchronized;
-    
-    private boolean isNative;
+	private List<FullyQualifiedJavaType> exceptions;
 
-    /**
-     *  
-     */
-    public Method() {
-        // use a default name to avoid malformed code
-        this("bar"); //$NON-NLS-1$
-    }
-    
-    public Method(String name) {
-        super();
-        bodyLines = new ArrayList<String>();
-        parameters = new ArrayList<Parameter>();
-        exceptions = new ArrayList<FullyQualifiedJavaType>();
-        this.name = name;
-    }
-    
-    /**
-     * Copy constructor.  Not a truly deep copy, but close enough
-     * for most purposes.
-     * 
-     * @param original
-     */
-    public Method(Method original) {
-        super(original);
-        bodyLines = new ArrayList<String>();
-        parameters = new ArrayList<Parameter>();
-        exceptions = new ArrayList<FullyQualifiedJavaType>();
-        this.bodyLines.addAll(original.bodyLines);
-        this.constructor = original.constructor;
-        this.exceptions.addAll(original.exceptions);
-        this.name = original.name;
-        this.parameters.addAll(original.parameters);
-        this.returnType = original.returnType;
-        this.isNative = original.isNative;
-        this.isSynchronized = original.isSynchronized;
-    }
+	private boolean isSynchronized;
 
-    /**
-     * @return Returns the bodyLines.
-     */
-    public List<String> getBodyLines() {
-        return bodyLines;
-    }
+	private boolean isNative;
 
-    public void addBodyLine(String line) {
-        bodyLines.add(line);
-    }
+	/**
+	 *  
+	 */
+	public Method() {
+		// use a default name to avoid malformed code
+		this("bar"); //$NON-NLS-1$
+	}
 
-    public void addBodyLine(int index, String line) {
-        bodyLines.add(index, line);
-    }
+	public Method(String name) {
+		super();
+		bodyLines = new ArrayList<String>();
+		parameters = new ArrayList<Parameter>();
+		exceptions = new ArrayList<FullyQualifiedJavaType>();
+		this.name = name;
+	}
 
-    public void addBodyLines(Collection<String> lines) {
-        bodyLines.addAll(lines);
-    }
+	/**
+	 * Copy constructor. Not a truly deep copy, but close enough for most purposes.
+	 * 
+	 * @param original
+	 */
+	public Method(Method original) {
+		super(original);
+		bodyLines = new ArrayList<String>();
+		parameters = new ArrayList<Parameter>();
+		exceptions = new ArrayList<FullyQualifiedJavaType>();
+		this.bodyLines.addAll(original.bodyLines);
+		this.constructor = original.constructor;
+		this.exceptions.addAll(original.exceptions);
+		this.name = original.name;
+		this.parameters.addAll(original.parameters);
+		this.returnType = original.returnType;
+		this.isNative = original.isNative;
+		this.isSynchronized = original.isSynchronized;
+	}
 
-    public void addBodyLines(int index, Collection<String> lines) {
-        bodyLines.addAll(index, lines);
-    }
+	/**
+	 * @return Returns the bodyLines.
+	 */
+	public List<String> getBodyLines() {
+		return bodyLines;
+	}
 
-    public String getFormattedContent(int indentLevel, boolean interfaceMethod) {
-        StringBuilder sb = new StringBuilder();
+	public void addBodyLine(String line) {
+		bodyLines.add(line);
+	}
 
-        addFormattedJavadoc(sb, indentLevel);
-        addFormattedAnnotations(sb, indentLevel);
+	public void addBodyLine(int index, String line) {
+		bodyLines.add(index, line);
+	}
 
-        OutputUtilities.javaIndent(sb, indentLevel);
+	public void addBodyLines(Collection<String> lines) {
+		bodyLines.addAll(lines);
+	}
 
-        if (!interfaceMethod) {
-            sb.append(getVisibility().getValue());
+	public void addBodyLines(int index, Collection<String> lines) {
+		bodyLines.addAll(index, lines);
+	}
 
-            if (isStatic()) {
-                sb.append("static "); //$NON-NLS-1$
-            }
+	public String getFormattedContent(int indentLevel, boolean interfaceMethod) {
+		StringBuilder sb = new StringBuilder();
 
-            if (isFinal()) {
-                sb.append("final "); //$NON-NLS-1$
-            }
-            
-            if (isSynchronized()) {
-                sb.append("synchronized "); //$NON-NLS-1$
-            }
-            
-            if (isNative()) {
-                sb.append("native "); //$NON-NLS-1$
-            } else if (bodyLines.size() == 0) {
-                sb.append("abstract "); //$NON-NLS-1$
-            }
-        }
+		addFormattedJavadoc(sb, indentLevel);
+		addFormattedAnnotations(sb, indentLevel);
 
-        if (!constructor) {
-            if (getReturnType() == null) {
-                sb.append("void"); //$NON-NLS-1$
-            } else {
-                sb.append(getReturnType().getShortName());
-            }
-            sb.append(' ');
-        }
+		OutputUtilities.javaIndent(sb, indentLevel);
 
-        sb.append(getName());
-        sb.append('(');
+		if (!interfaceMethod) {
+			sb.append(getVisibility().getValue());
 
-        boolean comma = false;
-        for (Parameter parameter : getParameters()) {
-            if (comma) {
-                sb.append(", "); //$NON-NLS-1$
-            } else {
-                comma = true;
-            }
+			if (isStatic()) {
+				sb.append("static "); //$NON-NLS-1$
+			}
 
-            sb.append(parameter.getFormattedContent());
-        }
+			if (isFinal()) {
+				sb.append("final "); //$NON-NLS-1$
+			}
 
-        sb.append(')');
+			if (isSynchronized()) {
+				sb.append("synchronized "); //$NON-NLS-1$
+			}
 
-        if (getExceptions().size() > 0) {
-            sb.append(" throws "); //$NON-NLS-1$
-            comma = false;
-            for (FullyQualifiedJavaType fqjt : getExceptions()) {
-                if (comma) {
-                    sb.append(", "); //$NON-NLS-1$
-                } else {
-                    comma = true;
-                }
+			if (isNative()) {
+				sb.append("native "); //$NON-NLS-1$
+			} else if (bodyLines.size() == 0) {
+				sb.append("abstract "); //$NON-NLS-1$
+			}
+		}
 
-                sb.append(fqjt.getShortName());
-            }
-        }
+		if (!constructor) {
+			if (getReturnType() == null) {
+				sb.append("void"); //$NON-NLS-1$
+			} else {
+				sb.append(getReturnType().getShortName());
+			}
+			sb.append(' ');
+		}
 
-        // if no body lines, then this is an abstract method
-        if (bodyLines.size() == 0 || isNative()) {
-            sb.append(';');
-        } else {
-            sb.append(" {"); //$NON-NLS-1$
-            indentLevel++;
+		sb.append(getName());
+		sb.append('(');
 
-            ListIterator<String> listIter = bodyLines.listIterator();
-            while (listIter.hasNext()) {
-                String line = listIter.next();
-                if (line.startsWith("}")) { //$NON-NLS-1$
-                    indentLevel--;
-                }
+		boolean comma = false;
+		for (Parameter parameter : getParameters()) {
+			if (comma) {
+				sb.append(", "); //$NON-NLS-1$
+			} else {
+				comma = true;
+			}
 
-                OutputUtilities.newLine(sb);
-                OutputUtilities.javaIndent(sb, indentLevel);
-                sb.append(line);
+			sb.append(parameter.getFormattedContent());
+		}
 
-                if ((line.endsWith("{") && !line.startsWith("switch")) //$NON-NLS-1$ //$NON-NLS-2$
-                        || line.endsWith(":")) { //$NON-NLS-1$
-                    indentLevel++;
-                }
+		sb.append(')');
 
-                if (line.startsWith("break")) { //$NON-NLS-1$
-                    // if the next line is '}', then don't outdent
-                    if (listIter.hasNext()) {
-                        String nextLine = listIter.next();
-                        if (nextLine.startsWith("}")) { //$NON-NLS-1$
-                            indentLevel++;
-                        }
+		if (getExceptions().size() > 0) {
+			sb.append(" throws "); //$NON-NLS-1$
+			comma = false;
+			for (FullyQualifiedJavaType fqjt : getExceptions()) {
+				if (comma) {
+					sb.append(", "); //$NON-NLS-1$
+				} else {
+					comma = true;
+				}
 
-                        // set back to the previous element
-                        listIter.previous();
-                    }
-                    indentLevel--;
-                }
-            }
+				sb.append(fqjt.getShortName());
+			}
+		}
 
-            indentLevel--;
-            OutputUtilities.newLine(sb);
-            OutputUtilities.javaIndent(sb, indentLevel);
-            sb.append('}');
-        }
+		// if no body lines, then this is an abstract method
+		if (bodyLines.size() == 0 || isNative()) {
+			sb.append(';');
+		} else {
+			sb.append(" {"); //$NON-NLS-1$
+			indentLevel++;
 
-        return sb.toString();
-    }
+			ListIterator<String> listIter = bodyLines.listIterator();
+			while (listIter.hasNext()) {
+				String line = listIter.next();
+				if (line.startsWith("}")) { //$NON-NLS-1$
+					indentLevel--;
+				}
 
-    /**
-     * @return Returns the constructor.
-     */
-    public boolean isConstructor() {
-        return constructor;
-    }
+				OutputUtilities.newLine(sb);
+				OutputUtilities.javaIndent(sb, indentLevel);
+				sb.append(line);
 
-    /**
-     * @param constructor
-     *            The constructor to set.
-     */
-    public void setConstructor(boolean constructor) {
-        this.constructor = constructor;
-    }
+				if ((line.endsWith("{") && !line.startsWith("switch")) //$NON-NLS-1$ //$NON-NLS-2$
+						|| line.endsWith(":")) { //$NON-NLS-1$
+					indentLevel++;
+				}
 
-    /**
-     * @return Returns the name.
-     */
-    public String getName() {
-        return name;
-    }
+				if (line.startsWith("break")) { //$NON-NLS-1$
+					// if the next line is '}', then don't outdent
+					if (listIter.hasNext()) {
+						String nextLine = listIter.next();
+						if (nextLine.startsWith("}")) { //$NON-NLS-1$
+							indentLevel++;
+						}
 
-    /**
-     * @param name
-     *            The name to set.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+						// set back to the previous element
+						listIter.previous();
+					}
+					indentLevel--;
+				}
+			}
 
-    public List<Parameter> getParameters() {
-        return parameters;
-    }
+			indentLevel--;
+			OutputUtilities.newLine(sb);
+			OutputUtilities.javaIndent(sb, indentLevel);
+			sb.append('}');
+		}
 
-    public void addParameter(Parameter parameter) {
-        parameters.add(parameter);
-    }
+		return sb.toString();
+	}
 
-    public void addParameter(int index, Parameter parameter) {
-        parameters.add(index, parameter);
-    }
+	/**
+	 * @return Returns the constructor.
+	 */
+	public boolean isConstructor() {
+		return constructor;
+	}
 
-    /**
-     * @return Returns the returnType.
-     */
-    public FullyQualifiedJavaType getReturnType() {
-        return returnType;
-    }
+	/**
+	 * @param constructor
+	 *            The constructor to set.
+	 */
+	public void setConstructor(boolean constructor) {
+		this.constructor = constructor;
+	}
 
-    /**
-     * @param returnType
-     *            The returnType to set.
-     */
-    public void setReturnType(FullyQualifiedJavaType returnType) {
-        this.returnType = returnType;
-    }
+	/**
+	 * @return Returns the name.
+	 */
+	public String getName() {
+		return name;
+	}
 
-    /**
-     * @return Returns the exceptions.
-     */
-    public List<FullyQualifiedJavaType> getExceptions() {
-        return exceptions;
-    }
+	/**
+	 * @param name
+	 *            The name to set.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void addException(FullyQualifiedJavaType exception) {
-        exceptions.add(exception);
-    }
+	public List<Parameter> getParameters() {
+		return parameters;
+	}
 
-    public boolean isSynchronized() {
-        return isSynchronized;
-    }
+	public void addParameter(Parameter parameter) {
+		parameters.add(parameter);
+	}
 
-    public void setSynchronized(boolean isSynchronized) {
-        this.isSynchronized = isSynchronized;
-    }
+	public void addParameter(int index, Parameter parameter) {
+		parameters.add(index, parameter);
+	}
 
-    public boolean isNative() {
-        return isNative;
-    }
+	/**
+	 * @return Returns the returnType.
+	 */
+	public FullyQualifiedJavaType getReturnType() {
+		return returnType;
+	}
 
-    public void setNative(boolean isNative) {
-        this.isNative = isNative;
-    }
+	/**
+	 * @param returnType
+	 *            The returnType to set.
+	 */
+	public void setReturnType(FullyQualifiedJavaType returnType) {
+		this.returnType = returnType;
+	}
+
+	/**
+	 * @return Returns the exceptions.
+	 */
+	public List<FullyQualifiedJavaType> getExceptions() {
+		return exceptions;
+	}
+
+	public void addException(FullyQualifiedJavaType exception) {
+		exceptions.add(exception);
+	}
+
+	public boolean isSynchronized() {
+		return isSynchronized;
+	}
+
+	public void setSynchronized(boolean isSynchronized) {
+		this.isSynchronized = isSynchronized;
+	}
+
+	public boolean isNative() {
+		return isNative;
+	}
+
+	public void setNative(boolean isNative) {
+		this.isNative = isNative;
+	}
+
+	// ---
+
+	public void removeAllBodyLines() {
+		this.bodyLines.clear();
+	}
+
+	public void removeAnnotation() {
+	}
+
+	public void removeBodyLine(int index) {
+		this.bodyLines.remove(index);
+	}
+
+	public void addDeprecated() {
+	}
+
+	public void removeParameter(int index) {
+		this.parameters.remove(index);
+	}
+
 }
