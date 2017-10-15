@@ -1,0 +1,21 @@
+<div class="bjui-pageContent">
+#set($bg='${bean.')
+#set($ed='}')
+#foreach($field in ${table.fields})
+#set($keyPropertyName=${field.propertyName})
+#if(${field.keyIdentityFlag})
+## 主键不生成
+#elseif(${field.convert})
+    <div class="form-group">
+		<div class="col-lg-6">
+			<label class="control-label ">${field.comment}：</label>${bg}${keyPropertyName}${ed}
+		</div>
+	</div>
+#end
+#end
+</div>
+<div class="bjui-pageFooter">
+    <ul>
+        <li><button type="button" class="btn-close">取消</button></li>
+    </ul>
+</div>
