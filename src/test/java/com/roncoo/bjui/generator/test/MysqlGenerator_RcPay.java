@@ -29,13 +29,10 @@ import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
-import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.baomidou.mybatisplus.toolkit.StringUtils;
 
 /**
  * 代码生成器-mysql
@@ -48,12 +45,13 @@ public class MysqlGenerator_RcPay {
 	private static final String AUTHOR = "wujing";
 
 	// 包的根路径设置
-	private static final String PACKAGE_PATH = "com.roncoo.pay";
-	private static final String MODULE_NAME = "boss";
-	private static final String SUPERCONTROLLERCLASS = "com.roncoo.pay.common.custom.base";
+	private static final String PACKAGE_PATH = "com.roncoo.pay.boss";
+	private static final String PACKAGE_PATH_COM = "com.roncoo.pay.common";
+	private static final String MODULE_NAME = "admin";
+	private static final String SUPERCONTROLLERCLASS = "com.roncoo.pay.common.custom.base.BaseController";
 
 	// 文件保存的位置
-	private static final String OUTPUT_DIR = "D:/rc-pay/rc-pay-common/";
+	private static final String OUTPUT_DIR = "D:/workspace/rc-pay/rc-pay-boss/";
 	private static final String OUTPUT_DIR_JAVA = "src/main/java/";
 	private static final String OUTPUT_DIR_XML = "src/main/resources/mybatis/";
 	private static final String OUTPUT_DIR_FTL = "src/main/resources/templates/" + MODULE_NAME + "/";
@@ -85,25 +83,13 @@ public class MysqlGenerator_RcPay {
 		// 自定义文件命名，注意 %s 会自动填充表实体属性！
 		// gc.setMapperName("%sDao");
 		// gc.setXmlName("%sDao");
-		gc.setServiceName("%sDao");
-		gc.setServiceImplName("%sDaoImpl");
+		// gc.setServiceName("%sDao");
+		// gc.setServiceImplName("%sDaoImpl");
 		// gc.setControllerName("%sAction");
 
 		// 数据源配置
 		DataSourceConfig dsc = new DataSourceConfig();
-		dsc.setDbType(DbType.MYSQL);// 数据库类型
-		dsc.setTypeConvert(new MySqlTypeConvert() {
-			// 自定义数据库表字段类型转换【可选】
-			@Override
-			public DbColumnType processTypeConvert(String fieldType) {
-				// System.out.println("转换类型：" + fieldType);
-				// if ( fieldType.toLowerCase().contains( "tinyint" ) ) {
-				// return DbColumnType.BOOLEAN;
-				// }
-				return super.processTypeConvert(fieldType);
-			}
-		});
-		dsc.setDriverName(DRIVER_NAME).setUsername(DB_USER_NAME).setPassword(DB_PASSWORD).setUrl(DB_URL);
+		dsc.setDbType(DbType.MYSQL).setDriverName(DRIVER_NAME).setUsername(DB_USER_NAME).setPassword(DB_PASSWORD).setUrl(DB_URL);
 
 		// 策略配置
 		StrategyConfig sc = new StrategyConfig();
@@ -131,8 +117,10 @@ public class MysqlGenerator_RcPay {
 		// 【实体】是否为构建者模型（默认 false）
 		// public User setName(String name) {this.name = name; return this;}
 		// sc.setEntityBuilderModel(true);
+		
 		// 【实体】是否为lombok模型（默认 false）<a href="https://projectlombok.org/">document</a>
-		// sc.setEntityLombokModel(true);
+		sc.setEntityLombokModel(true);
+		
 		// Boolean类型字段是否移除is前缀处理
 		// sc.setEntityBooleanColumnRemoveIsPrefix(true);
 		// sc.setRestControllerStyle(true);
@@ -142,8 +130,6 @@ public class MysqlGenerator_RcPay {
 		PackageConfig pc = new PackageConfig();
 		pc.setParent(PACKAGE_PATH);// 自定义包路径
 		pc.setModuleName(MODULE_NAME);
-		pc.setService("dao");
-		pc.setServiceImpl("dao.impl");
 
 		// 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
 		InjectionConfig ic = new InjectionConfig() {
@@ -151,93 +137,88 @@ public class MysqlGenerator_RcPay {
 			public void initMap() {
 				Map<String, Object> map = new HashMap<>();
 				map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
-				if (StringUtils.isEmpty(MODULE_NAME)) {
-					this.getConfig().getPackageInfo().put("Biz", PACKAGE_PATH + ".biz");
-					this.getConfig().getPackageInfo().put("Ctl", PACKAGE_PATH + ".controller");
-					this.getConfig().getPackageInfo().put("Qo", PACKAGE_PATH + ".qo");
-					this.getConfig().getPackageInfo().put("Vo", PACKAGE_PATH + ".vo");
-				} else {
-					this.getConfig().getPackageInfo().put("Biz", PACKAGE_PATH + "." + MODULE_NAME + ".biz");
-					this.getConfig().getPackageInfo().put("Ctl", PACKAGE_PATH + "." + MODULE_NAME + ".controller");
-					this.getConfig().getPackageInfo().put("Qo", PACKAGE_PATH + "." + MODULE_NAME + ".qo");
-					this.getConfig().getPackageInfo().put("Vo", PACKAGE_PATH + "." + MODULE_NAME + ".vo");
-				}
+				//if (StringUtils.isEmpty(MODULE_NAME)) {
+					this.getConfig().getPackageInfo().put("Biz", PACKAGE_PATH + ".service");
+					this.getConfig().getPackageInfo().put("Ctl", PACKAGE_PATH + ".controller." + MODULE_NAME);
+					this.getConfig().getPackageInfo().put("Qo", PACKAGE_PATH + ".bean.qo");
+					this.getConfig().getPackageInfo().put("Vo", PACKAGE_PATH + ".bean.vo");
+					this.getConfig().getPackageInfo().put("Dao", PACKAGE_PATH_COM + ".dao");
+					this.getConfig().getPackageInfo().put("Ent", PACKAGE_PATH_COM + ".entity");
+					this.getConfig().getPackageInfo().put("Page", PACKAGE_PATH_COM + ".custom.bjui");
+//				} else {
+//					this.getConfig().getPackageInfo().put("Biz", PACKAGE_PATH + "." + MODULE_NAME + ".biz");
+//					this.getConfig().getPackageInfo().put("Ctl", PACKAGE_PATH + "." + MODULE_NAME + ".controller");
+//					this.getConfig().getPackageInfo().put("Qo", PACKAGE_PATH + "." + MODULE_NAME + ".qo");
+//					this.getConfig().getPackageInfo().put("Vo", PACKAGE_PATH + "." + MODULE_NAME + ".vo");
+//				}
 				this.setMap(map);
 			}
 		};
 
 		List<FileOutConfig> list = new ArrayList<>();
-
-		list.add(new FileOutConfig("/template/mapper.xml.vm") {
+		list.add(new FileOutConfig("/template/mybatis/service.java.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				return OUTPUT_DIR + OUTPUT_DIR_XML + tableInfo.getEntityName() + ".xml";
+				//if (StringUtils.isEmpty(MODULE_NAME)) {
+					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/service/" + tableInfo.getEntityName() + "Service.java";
+				//} else {
+				//	return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/" + MODULE_NAME.replace(".", "/") + "/service/" + tableInfo.getEntityName() + "Service.java";
+				//}
 			}
 		});
-		list.add(new FileOutConfig("/template/biz.java.vm") {
+		list.add(new FileOutConfig("/template/mybatis/controller.java.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				if (StringUtils.isEmpty(MODULE_NAME)) {
-					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/biz/" + tableInfo.getEntityName() + "Biz.java";
-				} else {
-					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/" + MODULE_NAME.replace(".", "/") + "/biz/" + tableInfo.getEntityName() + "Biz.java";
-				}
+				//if (StringUtils.isEmpty(MODULE_NAME)) {
+					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/controller/" + MODULE_NAME.replace(".", "/") + "/" + tableInfo.getEntityName() + "Controller.java";
+				//}
+				//return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/" + MODULE_NAME.replace(".", "/") + "/controller/" + tableInfo.getEntityName() + "Controller.java";
 			}
 		});
-		list.add(new FileOutConfig("/template/controller.java.vm") {
+		list.add(new FileOutConfig("/template/mybatis/qo.java.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				if (StringUtils.isEmpty(MODULE_NAME)) {
-					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/controller/" + tableInfo.getEntityName() + "Controller.java";
-				}
-				return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/" + MODULE_NAME.replace(".", "/") + "/controller/" + tableInfo.getEntityName() + "Controller.java";
+				//if (StringUtils.isEmpty(MODULE_NAME)) {
+					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/bean/qo/" + tableInfo.getEntityName() + "QO.java";
+				//}
+				//return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/" + MODULE_NAME.replace(".", "/") + "/qo/" + tableInfo.getEntityName() + "QO.java";
 			}
 		});
-		list.add(new FileOutConfig("/template/qo.java.vm") {
+		list.add(new FileOutConfig("/template/mybatis/vo.java.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				if (StringUtils.isEmpty(MODULE_NAME)) {
-					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/qo/" + tableInfo.getEntityName() + "QO.java";
-				}
-				return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/" + MODULE_NAME.replace(".", "/") + "/qo/" + tableInfo.getEntityName() + "QO.java";
+				//if (StringUtils.isEmpty(MODULE_NAME)) {
+					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/bean/vo/" + tableInfo.getEntityName() + "VO.java";
+				//}
+				//return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/" + MODULE_NAME.replace(".", "/") + "/vo/" + tableInfo.getEntityName() + "VO.java";
 			}
 		});
-		list.add(new FileOutConfig("/template/vo.java.vm") {
-			// 自定义输出文件目录
-			@Override
-			public String outputFile(TableInfo tableInfo) {
-				if (StringUtils.isEmpty(MODULE_NAME)) {
-					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/vo/" + tableInfo.getEntityName() + "VO.java";
-				}
-				return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/" + MODULE_NAME.replace(".", "/") + "/vo/" + tableInfo.getEntityName() + "VO.java";
-			}
-		});
-		list.add(new FileOutConfig("/template/list.ftl.vm") {
+		list.add(new FileOutConfig("/template/bjui_ftl/list.ftl.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityPath() + "/list.ftl";
 			}
 		});
-		list.add(new FileOutConfig("/template/add.ftl.vm") {
+		list.add(new FileOutConfig("/template/bjui_ftl/add.ftl.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityPath() + "/add.ftl";
 			}
 		});
-		list.add(new FileOutConfig("/template/edit.ftl.vm") {
+		list.add(new FileOutConfig("/template/bjui_ftl/edit.ftl.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityPath() + "/edit.ftl";
 			}
 		});
-		list.add(new FileOutConfig("/template/view.ftl.vm") {
+		list.add(new FileOutConfig("/template/bjui_ftl/view.ftl.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
@@ -247,15 +228,15 @@ public class MysqlGenerator_RcPay {
 		ic.setFileOutConfigList(list);
 
 		// 关闭默认 xml 生成，调整生成 至 根目录
+		// 自定义模板配置，模板可以参考源码 /mybatis-plus/src/main/resources/template
+		// 使用 copy至您项目 src/main/resources/template 目录下，模板名称也可自定义如下配置：
 		TemplateConfig tc = new TemplateConfig();
 		tc.setXml(null);
 		tc.setController(null);
-		// 自定义模板配置，模板可以参考源码 /mybatis-plus/src/main/resources/template
-		// 使用 copy至您项目 src/main/resources/template 目录下，模板名称也可自定义如下配置：
-		tc.setEntity("/template/entity.java.vm");
-		tc.setMapper("/template/mapper.java.vm");
-		tc.setService("/template/service.java.vm");
-		tc.setServiceImpl("/template/serviceImpl.java.vm");
+		tc.setEntity(null);
+		tc.setMapper(null);
+		tc.setService(null);
+		tc.setServiceImpl(null);
 
 		// 代码生成器
 		AutoGenerator ag = new AutoGenerator();

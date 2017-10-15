@@ -4,14 +4,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.roncoo.bjui.generator.custom.PageBjui;
-import com.roncoo.bjui.generator.custom.PageUtil;
-import ${package.Entity}.${entity};
 import ${package.Qo}.${entity}QO;
-import ${package.Service}.${table.serviceName};
 import ${package.Vo}.${entity}VO;
+import ${package.Page}.PageBjui;
+import ${package.Dao}.${entity}Dao;
+import ${package.Ent}.${entity};
 
 /**
  * $!{table.comment} 
@@ -20,41 +17,36 @@ import ${package.Vo}.${entity}VO;
  * @since ${date}
  */
 @Component
-public class ${entity}Biz {
+public class ${entity}Service {
 
 	@Autowired
-	private ${table.serviceName} service;
+	private ${entity}Dao dao;
 
 	public PageBjui<${entity}VO> listForPage(int current, int size, ${entity}QO qo) {
-	    ${entity} entity = new ${entity}();
-	    BeanUtils.copyProperties(qo, entity);
-		Page<${entity}> page = new Page<>(current, size);
-		EntityWrapper<${entity}> wrapper = new EntityWrapper<>(entity);
-		page = service.selectPage(page, wrapper);
-        return PageUtil.transform(page, ${entity}VO.class);
+        return null;
 	}
 
-	public boolean save(${entity}QO qo) {
-	    ${entity} entity = new ${entity}();
-        BeanUtils.copyProperties(qo, entity);
-		return service.insert(entity);
+	public int save(${entity}QO qo) {
+	    ${entity} record = new ${entity}();
+        BeanUtils.copyProperties(qo, record);
+		return dao.save(record);
 	}
 
-	public boolean deleteById(Long id) {
-		return service.deleteById(id);
+	public int deleteById(Long id) {
+		return dao.deleteById(id);
 	}
 
 	public ${entity}VO getById(Long id) {
 	    ${entity}VO vo = new ${entity}VO();
-	    ${entity} entity = service.selectById(id);
-        BeanUtils.copyProperties(entity, vo);
+	    ${entity} record = dao.getById(id);
+        BeanUtils.copyProperties(record, vo);
 		return vo;
 	}
 
-	public boolean updateById(${entity}QO qo) {
-	    ${entity} entity = new ${entity}();
-        BeanUtils.copyProperties(qo, entity);
-		return service.updateById(entity);
+	public int updateById(${entity}QO qo) {
+	    ${entity} record = new ${entity}();
+        BeanUtils.copyProperties(qo, record);
+		return dao.updateById(record);
 	}
 	
 }
