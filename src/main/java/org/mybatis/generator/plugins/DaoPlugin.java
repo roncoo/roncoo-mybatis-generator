@@ -186,7 +186,7 @@ public class DaoPlugin extends PluginAdapter {
 		addServiceImpl(topLevelClass, introspectedTable, tableName, files);
 
 		// 日志类
-		//addLogger(topLevelClass);
+		//addLogger(topLevelClass); // 项目需要可以添加
 
 		return files;
 	}
