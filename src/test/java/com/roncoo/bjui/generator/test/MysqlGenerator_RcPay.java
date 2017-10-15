@@ -49,11 +49,11 @@ public class MysqlGenerator_RcPay {
 
 	// 包的根路径设置
 	private static final String PACKAGE_PATH = "com.roncoo.pay";
-	private static final String MODULE_NAME = "common";
+	private static final String MODULE_NAME = "boss";
 	private static final String SUPERCONTROLLERCLASS = "com.roncoo.pay.common.custom.base";
 
 	// 文件保存的位置
-	private static final String OUTPUT_DIR = "D:/workspace/rc-pay/rc-pay-common/";
+	private static final String OUTPUT_DIR = "D:/rc-pay/rc-pay-common/";
 	private static final String OUTPUT_DIR_JAVA = "src/main/java/";
 	private static final String OUTPUT_DIR_XML = "src/main/resources/mybatis/";
 	private static final String OUTPUT_DIR_FTL = "src/main/resources/templates/" + MODULE_NAME + "/";
@@ -175,7 +175,7 @@ public class MysqlGenerator_RcPay {
 				return OUTPUT_DIR + OUTPUT_DIR_XML + tableInfo.getEntityName() + ".xml";
 			}
 		});
-		/*list.add(new FileOutConfig("/template/biz.java.vm") {
+		list.add(new FileOutConfig("/template/biz.java.vm") {
 			// 自定义输出文件目录
 			@Override
 			public String outputFile(TableInfo tableInfo) {
@@ -243,7 +243,7 @@ public class MysqlGenerator_RcPay {
 			public String outputFile(TableInfo tableInfo) {
 				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityPath() + "/view.ftl";
 			}
-		});*/
+		});
 		ic.setFileOutConfigList(list);
 
 		// 关闭默认 xml 生成，调整生成 至 根目录
