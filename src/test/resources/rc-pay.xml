@@ -29,8 +29,9 @@
             <property name="enableDeleteByPrimaryKey" value="true" />
             <property name="enableUpdateByPrimaryKeySelective" value="true" />
             <property name="enableSelectByPrimaryKey" value="true" />
-            <property name="enableCount" value="true" />
-            <property name="enableSelectByExample" value="true" />
+            <property name="enablePage" value="true" />
+            <property name="enableSelectByExample" value="false" />
+            <property name="enableCount" value="false" />
 
             <property name="enableInsert" value="false" />
             <property name="enableUpdateByExampleSelective" value="false" />

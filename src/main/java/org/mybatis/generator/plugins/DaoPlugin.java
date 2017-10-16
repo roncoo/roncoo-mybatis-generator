@@ -60,6 +60,7 @@ public class DaoPlugin extends PluginAdapter {
 	private boolean enableSelectByExample = false;
 	private boolean enableSelectByPrimaryKey = false;
 	private boolean enableCount = false;
+	private boolean enablePage = false;
 
 	public DaoPlugin() {
 		super();
@@ -90,6 +91,7 @@ public class DaoPlugin extends PluginAdapter {
 		String enableSelectByExample = properties.getProperty("enableSelectByExample");
 		String enableSelectByPrimaryKey = properties.getProperty("enableSelectByPrimaryKey"); // getById
 		String enableCount = properties.getProperty("enableCount");
+		String enablePage = properties.getProperty("enablePage");
 
 		if (StringUtility.stringHasValue(enableAnnotation)) {
 			this.enableAnnotation = StringUtility.isTrue(enableAnnotation);
@@ -137,6 +139,9 @@ public class DaoPlugin extends PluginAdapter {
 		if (StringUtility.stringHasValue(enableCount)) {
 			this.enableCount = StringUtility.isTrue(enableCount);
 		}
+		if (StringUtility.stringHasValue(enablePage)) {
+			this.enablePage = StringUtility.isTrue(enablePage);
+		}
 
 		this.daoPack = properties.getProperty("targetPackage");
 		this.daoImplPack = properties.getProperty("implementationPackage");
@@ -172,16 +177,16 @@ public class DaoPlugin extends PluginAdapter {
 
 		// 【com.roncoo.domain.Criteria】
 		pojoCriteriaType = new FullyQualifiedJavaType(pojoUrl + "." + tableName + "Criteria");
-		
+
 		// 【com.roncoo.domain.Example】
 		pojoExampleType = new FullyQualifiedJavaType(pojoUrl + "." + tableName + "Example");
 
 		// 【java.util.List】
 		listType = new FullyQualifiedJavaType("java.util.List");
-		
+
 		// 【com.roncoo.pay.common.custom.bjui.PageBjui】
 		pageType = new FullyQualifiedJavaType("com.roncoo.pay.common.custom.bjui.PageBjui");
-		
+
 		// 【com.roncoo.pay.common.custom.bjui.PageUtil】
 		pageUtilType = new FullyQualifiedJavaType("com.roncoo.pay.common.custom.bjui.PageUtil");
 
@@ -269,11 +274,12 @@ public class DaoPlugin extends PluginAdapter {
 			method.removeAllBodyLines();
 			interface1.addMethod(method);
 		}
-		
-		method = listForPage(introspectedTable, tableName);
-		method.removeAllBodyLines();
-		interface1.addMethod(method);
-		
+		if (enablePage) {
+			method = listForPage(introspectedTable, tableName);
+			method.removeAllBodyLines();
+			interface1.addMethod(method);
+		}
+
 		GeneratedJavaFile file = new GeneratedJavaFile(interface1, project, context.getJavaFormatter());
 		files.add(file);
 	}
@@ -344,8 +350,9 @@ public class DaoPlugin extends PluginAdapter {
 		if (enableCount) {
 			topLevelClass.addMethod(countByExample(introspectedTable, tableName));
 		}
-		
-		topLevelClass.addMethod(listForPage(introspectedTable, tableName));
+		if (enablePage) {
+			topLevelClass.addMethod(listForPage(introspectedTable, tableName));
+		}
 
 		GeneratedJavaFile file = new GeneratedJavaFile(topLevelClass, project, context.getJavaFormatter());
 		files.add(file);
@@ -368,12 +375,12 @@ public class DaoPlugin extends PluginAdapter {
 		}
 		topLevelClass.addField(field);
 	}
-	
+
 	/**
 	 * add method
 	 * 
 	 */
-	protected Method listForPage( IntrospectedTable introspectedTable, String tableName) {
+	protected Method listForPage(IntrospectedTable introspectedTable, String tableName) {
 		Method method = new Method();
 		method.setName("listForPage");
 		method.setReturnType(new FullyQualifiedJavaType("PageBjui<" + tableName + ">"));
@@ -482,8 +489,8 @@ public class DaoPlugin extends PluginAdapter {
 		sb.append("example");
 		sb.append(");");
 		method.addBodyLine(sb.toString());
-		//method.addBodyLine("logger.debug(\"count: {}\", count);");
-		//method.addBodyLine("return count;");
+		// method.addBodyLine("logger.debug(\"count: {}\", count);");
+		// method.addBodyLine("return count;");
 		return method;
 	}
 
@@ -711,20 +718,31 @@ public class DaoPlugin extends PluginAdapter {
 	 */
 	private void addImport(Interface interfaces, TopLevelClass topLevelClass) {
 		// 接口类
-		interfaces.addImportedType(listType);
-		interfaces.addImportedType(pageType);
+		if (enableSelectByExample) {
+			interfaces.addImportedType(listType);
+			interfaces.addImportedType(pojoExampleType);
+		}
+		if (enablePage) {
+			interfaces.addImportedType(pojoExampleType);
+			interfaces.addImportedType(pageType);
+		}
 		interfaces.addImportedType(pojoType);
-		interfaces.addImportedType(pojoExampleType);
 		// interfaces.addImportedType(pojoCriteriaType);
 
 		// 实现类
+		if (enableSelectByExample) {
+			topLevelClass.addImportedType(listType);
+			topLevelClass.addImportedType(pojoExampleType);
+		}
+		if (enablePage) {
+			topLevelClass.addImportedType(pojoExampleType);
+			topLevelClass.addImportedType(pageType);
+			topLevelClass.addImportedType(pageUtilType);
+		}
 		topLevelClass.addImportedType(daoType); // mapper
 		topLevelClass.addImportedType(interfaceType);
-		topLevelClass.addImportedType(listType);
-		topLevelClass.addImportedType(pageType);
 		topLevelClass.addImportedType(pojoType);
-		topLevelClass.addImportedType(pojoExampleType);
-		topLevelClass.addImportedType(pageUtilType);
+
 		// topLevelClass.addImportedType(pojoCriteriaType);
 		// topLevelClass.addImportedType(slf4jLogger);
 		// topLevelClass.addImportedType(slf4jLoggerFactory);
