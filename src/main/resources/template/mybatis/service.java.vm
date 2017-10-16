@@ -7,8 +7,11 @@ import org.springframework.stereotype.Component;
 import ${package.Qo}.${entity}QO;
 import ${package.Vo}.${entity}VO;
 import ${package.Page}.PageBjui;
+import ${package.Page}.PageBjuiUtil;
 import ${package.Dao}.${entity}Dao;
 import ${package.Ent}.${entity};
+import ${package.Ent}.${entity}Example;
+import ${package.Ent}.${entity}Example.Criteria;
 
 /**
  * $!{table.comment} 
@@ -22,8 +25,12 @@ public class ${entity}Service {
 	@Autowired
 	private ${entity}Dao dao;
 
-	public PageBjui<${entity}VO> listForPage(int current, int size, ${entity}QO qo) {
-        return null;
+	public PageBjui<${entity}VO> listForPage(int pageCurrent, int pageSize, ${entity}QO qo) {
+	    ${entity}Example example = new ${entity}Example();
+	    Criteria c = example.createCriteria();
+	    example.setOrderByClause(" id desc ");
+        PageBjui<${entity}> page = dao.listForPage(pageCurrent, pageSize, example);
+        return PageBjuiUtil.transform(page, ${entity}VO.class);
 	}
 
 	public int save(${entity}QO qo) {

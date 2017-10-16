@@ -44,6 +44,8 @@ public class ${table.controllerName} {
 	@RequestMapping("/list")
 	public void list(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent, @RequestParam(value = "pageSize", defaultValue = "20") int pageSize, @ModelAttribute ${entity}QO qo, ModelMap modelMap){
 		modelMap.put("page", service.listForPage(pageCurrent, pageSize, qo));
+		modelMap.put("pageCurrent", pageCurrent);
+		modelMap.put("pageSize", pageSize);
 		modelMap.put("bean", qo);
 	}
 	
