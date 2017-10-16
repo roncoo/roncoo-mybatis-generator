@@ -29,14 +29,14 @@
             <property name="enableDeleteByPrimaryKey" value="true" />
             <property name="enableUpdateByPrimaryKeySelective" value="true" />
             <property name="enableSelectByPrimaryKey" value="true" />
+            <property name="enableCount" value="true" />
+            <property name="enableSelectByExample" value="true" />
 
             <property name="enableInsert" value="false" />
             <property name="enableUpdateByExampleSelective" value="false" />
             <property name="enableUpdateByPrimaryKey" value="false" />
             <property name="enableDeleteByExample" value="false" />
             <property name="enableUpdateByExample" value="false" />
-            <property name="enableCount" value="false" />
-            <property name="enableSelectByExample" value="false" />
         </plugin>
 
 		<commentGenerator>

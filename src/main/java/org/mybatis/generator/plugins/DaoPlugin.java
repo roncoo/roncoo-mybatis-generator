@@ -29,7 +29,10 @@ public class DaoPlugin extends PluginAdapter {
 	private FullyQualifiedJavaType interfaceType;
 	private FullyQualifiedJavaType pojoType;
 	private FullyQualifiedJavaType pojoCriteriaType;
+	private FullyQualifiedJavaType pojoExampleType;
 	private FullyQualifiedJavaType listType;
+	private FullyQualifiedJavaType pageType;
+	private FullyQualifiedJavaType pageUtilType;
 	private FullyQualifiedJavaType autowired;
 	private FullyQualifiedJavaType service;
 	private FullyQualifiedJavaType returnType;
@@ -169,9 +172,18 @@ public class DaoPlugin extends PluginAdapter {
 
 		// 【com.roncoo.domain.Criteria】
 		pojoCriteriaType = new FullyQualifiedJavaType(pojoUrl + "." + tableName + "Criteria");
+		
+		// 【com.roncoo.domain.Example】
+		pojoExampleType = new FullyQualifiedJavaType(pojoUrl + "." + tableName + "Example");
 
 		// 【java.util.List】
 		listType = new FullyQualifiedJavaType("java.util.List");
+		
+		// 【com.roncoo.pay.common.custom.bjui.PageBjui】
+		pageType = new FullyQualifiedJavaType("com.roncoo.pay.common.custom.bjui.PageBjui");
+		
+		// 【com.roncoo.pay.common.custom.bjui.PageUtil】
+		pageUtilType = new FullyQualifiedJavaType("com.roncoo.pay.common.custom.bjui.PageUtil");
 
 		Interface interface1 = new Interface(interfaceType);
 		TopLevelClass topLevelClass = new TopLevelClass(serviceType);
@@ -186,7 +198,7 @@ public class DaoPlugin extends PluginAdapter {
 		addServiceImpl(topLevelClass, introspectedTable, tableName, files);
 
 		// 日志类
-		//addLogger(topLevelClass); // 项目需要可以添加
+		// addLogger(topLevelClass); // 项目需要可以添加
 
 		return files;
 	}
@@ -200,28 +212,22 @@ public class DaoPlugin extends PluginAdapter {
 	protected void addService(Interface interface1, IntrospectedTable introspectedTable, String tableName, List<GeneratedJavaFile> files) {
 		interface1.setVisibility(JavaVisibility.PUBLIC);
 		Method method = null;
-		
-		// 统计方法
-		if (enableCount) {
-			method = countByExample(introspectedTable, tableName);
+
+		if (enableInsert) {
+			method = getOtherInsertboolean("insert", "insert", introspectedTable, tableName);
 			method.removeAllBodyLines();
 			interface1.addMethod(method);
 		}
-
-		// 查找方法1
-		if (enableSelectByPrimaryKey) {
-			method = selectByPrimaryKey("getById", introspectedTable, tableName);
+		if (enableInsertSelective) {
+			method = getOtherInsertboolean("save", "insertSelective", introspectedTable, tableName);
 			method.removeAllBodyLines();
 			interface1.addMethod(method);
 		}
-
-		// 查找方法2
-		if (enableSelectByExample) {
-			 method = selectByExample(introspectedTable, tableName);
-			 method.removeAllBodyLines();
-			 interface1.addMethod(method);
+		if (enableDeleteByExample) {
+			method = getOtherInteger("deleteByExample", "deleteByExample", introspectedTable, tableName, 3);
+			method.removeAllBodyLines();
+			interface1.addMethod(method);
 		}
-
 		if (enableDeleteByPrimaryKey) {
 			method = getOtherInteger("deleteById", "deleteByPrimaryKey", introspectedTable, tableName, 2);
 			method.removeAllBodyLines();
@@ -237,11 +243,6 @@ public class DaoPlugin extends PluginAdapter {
 			method.removeAllBodyLines();
 			interface1.addMethod(method);
 		}
-		if (enableDeleteByExample) {
-			method = getOtherInteger("deleteByExample", "deleteByExample", introspectedTable, tableName, 3);
-			method.removeAllBodyLines();
-			interface1.addMethod(method);
-		}
 		if (enableUpdateByExampleSelective) {
 			method = getOtherInteger("updateByExampleSelective", "updateByExampleSelective", introspectedTable, tableName, 4);
 			method.removeAllBodyLines();
@@ -252,17 +253,27 @@ public class DaoPlugin extends PluginAdapter {
 			method.removeAllBodyLines();
 			interface1.addMethod(method);
 		}
-		if (enableInsert) {
-			method = getOtherInsertboolean("insert", "insert", introspectedTable, tableName);
-			method.removeAllBodyLines();
-			interface1.addMethod(method);
-		}
-		if (enableInsertSelective) {
-			method = getOtherInsertboolean("save", "insertSelective", introspectedTable, tableName);
-			method.removeAllBodyLines();
-			interface1.addMethod(method);
-		}
 
+		if (enableSelectByPrimaryKey) {
+			method = selectByPrimaryKey("getById", introspectedTable, tableName);
+			method.removeAllBodyLines();
+			interface1.addMethod(method);
+		}
+		if (enableSelectByExample) {
+			method = selectByExample("listByExample", introspectedTable, tableName);
+			method.removeAllBodyLines();
+			interface1.addMethod(method);
+		}
+		if (enableCount) {
+			method = countByExample(introspectedTable, tableName);
+			method.removeAllBodyLines();
+			interface1.addMethod(method);
+		}
+		
+		method = listForPage(introspectedTable, tableName);
+		method.removeAllBodyLines();
+		interface1.addMethod(method);
+		
 		GeneratedJavaFile file = new GeneratedJavaFile(interface1, project, context.getJavaFormatter());
 		files.add(file);
 	}
@@ -285,19 +296,6 @@ public class DaoPlugin extends PluginAdapter {
 
 		// add import dao
 		addField(topLevelClass, tableName);
-
-		// add method
-		if (enableSelectByExample) {
-			topLevelClass.addMethod(selectByExample(introspectedTable, tableName));
-		}
-
-		if (enableSelectByPrimaryKey) {
-			topLevelClass.addMethod(selectByPrimaryKey("getById", introspectedTable, tableName));
-		}
-
-		if (enableCount) {
-			topLevelClass.addMethod(countByExample(introspectedTable, tableName));
-		}
 
 		/**
 		 * type: pojo 1 ;key 2 ;example 3 ;pojo+example 4
@@ -334,6 +332,21 @@ public class DaoPlugin extends PluginAdapter {
 			topLevelClass.addMethod(getOtherInteger("updateByExample", "updateByExample", introspectedTable, tableName, 4));
 		}
 
+		// add method
+		if (enableSelectByExample) {
+			topLevelClass.addMethod(selectByExample("listByExample", introspectedTable, tableName));
+		}
+
+		if (enableSelectByPrimaryKey) {
+			topLevelClass.addMethod(selectByPrimaryKey("getById", introspectedTable, tableName));
+		}
+
+		if (enableCount) {
+			topLevelClass.addMethod(countByExample(introspectedTable, tableName));
+		}
+		
+		topLevelClass.addMethod(listForPage(introspectedTable, tableName));
+
 		GeneratedJavaFile file = new GeneratedJavaFile(topLevelClass, project, context.getJavaFormatter());
 		files.add(file);
 	}
@@ -355,16 +368,48 @@ public class DaoPlugin extends PluginAdapter {
 		}
 		topLevelClass.addField(field);
 	}
+	
+	/**
+	 * add method
+	 * 
+	 */
+	protected Method listForPage( IntrospectedTable introspectedTable, String tableName) {
+		Method method = new Method();
+		method.setName("listForPage");
+		method.setReturnType(new FullyQualifiedJavaType("PageBjui<" + tableName + ">"));
+		FullyQualifiedJavaType type = new FullyQualifiedJavaType("int");
+		method.addParameter(new Parameter(type, "pageCurrent"));
+		method.addParameter(new Parameter(type, "pageSize"));
+		method.addParameter(new Parameter(pojoExampleType, "example"));
+		method.setVisibility(JavaVisibility.PUBLIC);
+		StringBuilder sb = new StringBuilder();
+		sb.append("int count = this.");
+		sb.append(getDaoShort());
+		sb.append("countByExample(example);");
+		method.addBodyLine(sb.toString());
+		method.addBodyLine("pageSize = PageUtil.checkPageSize(pageSize);");
+		method.addBodyLine("pageCurrent = PageUtil.checkPageCurrent(count, pageSize, pageCurrent);");
+		method.addBodyLine("int totalPage = PageUtil.countTotalPage(count, pageSize);");
+		method.addBodyLine("example.setLimitStart(PageUtil.countOffset(pageCurrent, pageSize));");
+		method.addBodyLine("example.setPageSize(pageSize);");
+		StringBuilder sbs = new StringBuilder();
+		sbs.append("return new PageBjui<" + tableName + ">(");
+		sbs.append("count, totalPage, pageCurrent, pageSize, this.");
+		sbs.append(getDaoShort());
+		sbs.append("selectByExample(example));");
+		method.addBodyLine(sbs.toString());
+		return method;
+	}
 
 	/**
 	 * add method
 	 * 
 	 */
-	protected Method selectByExample(IntrospectedTable introspectedTable, String tableName) {
+	protected Method selectByExample(String methodName1, IntrospectedTable introspectedTable, String tableName) {
 		Method method = new Method();
-		method.setName("selectByExample");
+		method.setName(methodName1);
 		method.setReturnType(new FullyQualifiedJavaType("List<" + tableName + ">"));
-		// method.addParameter(new Parameter(pojoCriteriaType, "example"));
+		method.addParameter(new Parameter(pojoExampleType, "example"));
 		method.setVisibility(JavaVisibility.PUBLIC);
 		StringBuilder sb = new StringBuilder();
 		sb.append("return this.");
@@ -427,18 +472,18 @@ public class DaoPlugin extends PluginAdapter {
 		Method method = new Method();
 		method.setName("countByExample");
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-		// method.addParameter(new Parameter(pojoCriteriaType, "example"));
+		method.addParameter(new Parameter(pojoExampleType, "example"));
 		method.setVisibility(JavaVisibility.PUBLIC);
 		StringBuilder sb = new StringBuilder();
-		sb.append("int count = this.");
+		sb.append("return this.");
 		sb.append(getDaoShort());
 		sb.append("countByExample");
 		sb.append("(");
 		sb.append("example");
 		sb.append(");");
 		method.addBodyLine(sb.toString());
-		method.addBodyLine("logger.debug(\"count: {}\", count);");
-		method.addBodyLine("return count;");
+		//method.addBodyLine("logger.debug(\"count: {}\", count);");
+		//method.addBodyLine("return count;");
 		return method;
 	}
 
@@ -532,6 +577,9 @@ public class DaoPlugin extends PluginAdapter {
 			method.addParameter(0, new Parameter(pojoType, "record"));
 			method.addParameter(1, new Parameter(pojoCriteriaType, "example"));
 			return "record, example";
+		case 5:
+			method.addParameter(1, new Parameter(pojoExampleType, "example"));
+			return "example";
 		default:
 			break;
 		}
@@ -663,16 +711,21 @@ public class DaoPlugin extends PluginAdapter {
 	 */
 	private void addImport(Interface interfaces, TopLevelClass topLevelClass) {
 		// 接口类
+		interfaces.addImportedType(listType);
+		interfaces.addImportedType(pageType);
 		interfaces.addImportedType(pojoType);
+		interfaces.addImportedType(pojoExampleType);
 		// interfaces.addImportedType(pojoCriteriaType);
-		// interfaces.addImportedType(listType);
 
 		// 实现类
 		topLevelClass.addImportedType(daoType); // mapper
 		topLevelClass.addImportedType(interfaceType);
+		topLevelClass.addImportedType(listType);
+		topLevelClass.addImportedType(pageType);
 		topLevelClass.addImportedType(pojoType);
+		topLevelClass.addImportedType(pojoExampleType);
+		topLevelClass.addImportedType(pageUtilType);
 		// topLevelClass.addImportedType(pojoCriteriaType);
-		// topLevelClass.addImportedType(listType);
 		// topLevelClass.addImportedType(slf4jLogger);
 		// topLevelClass.addImportedType(slf4jLoggerFactory);
 
