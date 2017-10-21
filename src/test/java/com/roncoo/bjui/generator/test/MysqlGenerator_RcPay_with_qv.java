@@ -39,14 +39,9 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
  * 
  * @author wujing
  */
-public class MysqlGenerator_RcPay {
+public class MysqlGenerator_RcPay_with_qv {
 
-	private static final String[] TABLES = new String[] {"sys_menu",
-			"sys_menu_role",
-			"sys_organization",
-			"sys_role",
-			"sys_role_user",
-			"sys_user"};
+	private static final String[] TABLES = new String[] {"mch_info","account_info"};
 	private static final String AUTHOR = "wujing";
 
 	// 包的根路径设置
@@ -161,27 +156,7 @@ public class MysqlGenerator_RcPay {
 		};
 
 		List<FileOutConfig> list = new ArrayList<>();
-		list.add(new FileOutConfig("/template/mybatis/service.java.vm") {
-			// 自定义输出文件目录
-			@Override
-			public String outputFile(TableInfo tableInfo) {
-				//if (StringUtils.isEmpty(MODULE_NAME)) {
-					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/service/" + tableInfo.getEntityName() + "Service.java";
-				//} else {
-				//	return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/" + MODULE_NAME.replace(".", "/") + "/service/" + tableInfo.getEntityName() + "Service.java";
-				//}
-			}
-		});
-		list.add(new FileOutConfig("/template/mybatis/controller.java.vm") {
-			// 自定义输出文件目录
-			@Override
-			public String outputFile(TableInfo tableInfo) {
-				//if (StringUtils.isEmpty(MODULE_NAME)) {
-					return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/controller/" + MODULE_NAME.replace(".", "/") + "/" + tableInfo.getEntityName() + "Controller.java";
-				//}
-				//return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/" + MODULE_NAME.replace(".", "/") + "/controller/" + tableInfo.getEntityName() + "Controller.java";
-			}
-		});
+		
 		list.add(new FileOutConfig("/template/mybatis/qo.java.vm") {
 			// 自定义输出文件目录
 			@Override
@@ -202,34 +177,7 @@ public class MysqlGenerator_RcPay {
 				//return OUTPUT_DIR + OUTPUT_DIR_JAVA + PACKAGE_PATH.replace(".", "/") + "/" + MODULE_NAME.replace(".", "/") + "/vo/" + tableInfo.getEntityName() + "VO.java";
 			}
 		});
-		list.add(new FileOutConfig("/template/bjui_ftl/list.ftl.vm") {
-			// 自定义输出文件目录
-			@Override
-			public String outputFile(TableInfo tableInfo) {
-				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityPath() + "/list.ftl";
-			}
-		});
-		list.add(new FileOutConfig("/template/bjui_ftl/add.ftl.vm") {
-			// 自定义输出文件目录
-			@Override
-			public String outputFile(TableInfo tableInfo) {
-				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityPath() + "/add.ftl";
-			}
-		});
-		list.add(new FileOutConfig("/template/bjui_ftl/edit.ftl.vm") {
-			// 自定义输出文件目录
-			@Override
-			public String outputFile(TableInfo tableInfo) {
-				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityPath() + "/edit.ftl";
-			}
-		});
-		list.add(new FileOutConfig("/template/bjui_ftl/view.ftl.vm") {
-			// 自定义输出文件目录
-			@Override
-			public String outputFile(TableInfo tableInfo) {
-				return OUTPUT_DIR + OUTPUT_DIR_FTL + tableInfo.getEntityPath() + "/view.ftl";
-			}
-		});
+		
 		ic.setFileOutConfigList(list);
 
 		// 关闭默认 xml 生成，调整生成 至 根目录
