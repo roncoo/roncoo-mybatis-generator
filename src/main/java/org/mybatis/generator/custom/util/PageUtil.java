@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2016 RonCoo(http://www.roncoo.com) Group.
+ * Copyright 2015-2017 RonCoo(http://www.roncoo.com) Group.
  *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.mybatis.generator.custom.bjui;
+package org.mybatis.generator.custom.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

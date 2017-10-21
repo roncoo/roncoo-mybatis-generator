@@ -13,30 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.mybatis.generator.custom.bjui;
+package org.mybatis.generator.custom.jui;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * 分页
+ * 数据分页组件
  * 
  * @author wujing
  * @param <T>
  */
-public class PageBjui<T extends Serializable> implements Serializable {
+public class PageJui<T extends Serializable> implements Serializable {
 
-	private static final long serialVersionUID = -5764853545343945831L;
-
-	/**
-	 * 默认每页记录数(20)
-	 */
-	public static final int DEFAULT_PAGE_SIZE = 20;
-
-	/**
-	 * 最大每页记录数(1000)
-	 */
-	public static final int MAX_PAGE_SIZE = 1000;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 当前分页的数据集
@@ -56,12 +46,12 @@ public class PageBjui<T extends Serializable> implements Serializable {
 	/**
 	 * 当前页
 	 */
-	private int pageCurrent = 1;
+	private int currentPage;
 
 	/**
 	 * 每页记录数
 	 */
-	private int pageSize;
+	private int numPerPage;
 
 	/**
 	 * 排序字段
@@ -74,12 +64,6 @@ public class PageBjui<T extends Serializable> implements Serializable {
 	private String orderDirection;
 
 	/**
-	 * 默认构造函数
-	 */
-	public PageBjui() {
-	}
-
-	/**
 	 * 构造函数
 	 * 
 	 * @param totalCount
@@ -90,11 +74,11 @@ public class PageBjui<T extends Serializable> implements Serializable {
 	 * @param pageSize
 	 * @param list
 	 */
-	public PageBjui(int totalCount, int totalPage, int pageCurrent, int pageSize, List<T> list) {
+	public PageJui(int totalCount, int totalPage, int currentPage, int numPerPage, List<T> list) {
 		this.totalCount = totalCount;
 		this.totalPage = totalPage;
-		this.pageCurrent = pageCurrent;
-		this.pageSize = pageSize;
+		this.currentPage = currentPage;
+		this.numPerPage = numPerPage;
 		this.list = list;
 	}
 
@@ -122,20 +106,20 @@ public class PageBjui<T extends Serializable> implements Serializable {
 		this.totalPage = totalPage;
 	}
 
-	public int getPageCurrent() {
-		return pageCurrent;
+	public int getCurrentPage() {
+		return currentPage;
 	}
 
-	public void setPageCurrent(int pageCurrent) {
-		this.pageCurrent = pageCurrent;
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
 	}
 
-	public int getPageSize() {
-		return pageSize;
+	public int getNumPerPage() {
+		return numPerPage;
 	}
 
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
+	public void setNumPerPage(int numPerPage) {
+		this.numPerPage = numPerPage;
 	}
 
 	public String getOrderField() {
@@ -156,7 +140,7 @@ public class PageBjui<T extends Serializable> implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PageBjui [list=" + list + ", totalCount=" + totalCount + ", totalPage=" + totalPage + ", pageCurrent=" + pageCurrent + ", pageSize=" + pageSize + ", orderField=" + orderField + ", orderDirection=" + orderDirection + "]";
+		return "Page [list=" + list + ", totalCount=" + totalCount + ", totalPage=" + totalPage + ", currentPage=" + currentPage + ", numPerPage=" + numPerPage + ", orderField=" + orderField + ", orderDirection=" + orderDirection + "]";
 	}
 
 }
