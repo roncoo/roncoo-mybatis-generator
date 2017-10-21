@@ -13,4 +13,5 @@
 3. 运行com.roncoo.bjui.generator.test.MysqlGenerator类里面的main方法即可
 
 ### 技术交流
-技术交流群：546588570
+* QQ2群: 601146630
+* QQ1群: 213097382 (满)
