@@ -1,7 +1,7 @@
 <#assign base=request.contextPath /> 
 <div class="bjui-pageContent">
 	<form action="${base}#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/update" data-toggle="validate" method="post">
-		<input name="id" type="hidden" value="${bean.id}"/>
+		<input type="hidden" name="id" value="${bean.id}"/>
 #set($bg='${bean.')
 #set($ed='}')
 #foreach($field in ${table.fields})
