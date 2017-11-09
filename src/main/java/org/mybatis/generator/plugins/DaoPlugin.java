@@ -22,8 +22,7 @@ import org.mybatis.generator.internal.util.StringUtility;
  */
 public class DaoPlugin extends PluginAdapter {
 
-	private FullyQualifiedJavaType slf4jLogger;
-	private FullyQualifiedJavaType slf4jLoggerFactory;
+	private String pageUtilPath = "org.mybatis.generator.custom.util.PageBjui";
 	private FullyQualifiedJavaType serviceType;
 	private FullyQualifiedJavaType daoType;
 	private FullyQualifiedJavaType interfaceType;
@@ -64,8 +63,6 @@ public class DaoPlugin extends PluginAdapter {
 
 	public DaoPlugin() {
 		super();
-		slf4jLogger = new FullyQualifiedJavaType("org.slf4j.Logger");
-		slf4jLoggerFactory = new FullyQualifiedJavaType("org.slf4j.LoggerFactory");
 		methods = new ArrayList<Method>();
 	}
 
@@ -74,6 +71,8 @@ public class DaoPlugin extends PluginAdapter {
 	 */
 	@Override
 	public boolean validate(List<String> warnings) {
+
+		pageUtilPath = properties.getProperty("pageUtilPath");
 
 		String enableAnnotation = properties.getProperty("enableAnnotation");
 
@@ -185,10 +184,10 @@ public class DaoPlugin extends PluginAdapter {
 		listType = new FullyQualifiedJavaType("java.util.List");
 
 		// 【com.roncoo.pay.common.custom.bjui.PageBjui】
-		pageType = new FullyQualifiedJavaType("com.roncoo.pay.common.custom.bjui.PageBjui");
+		pageType = new FullyQualifiedJavaType(pageUtilPath);
 
 		// 【com.roncoo.pay.common.custom.bjui.PageUtil】
-		pageUtilType = new FullyQualifiedJavaType("com.roncoo.pay.common.custom.bjui.PageUtil");
+		pageUtilType = new FullyQualifiedJavaType(pageUtilPath);
 
 		Interface interface1 = new Interface(interfaceType);
 		TopLevelClass topLevelClass = new TopLevelClass(serviceType);

@@ -25,6 +25,7 @@
             <property name="targetPackage" value="${javaDaoGenerator.targetPackage}" />
             <property name="implementationPackage" value="${javaDaoGenerator.targetPackage}.impl" />
             <property name="targetProject" value="${javaDaoGenerator.targetProject}" />
+            <property name="pageUtilPath" value="${javaDaoGenerator.pageUtilPath}" />
             <property name="enableInsertSelective" value="true" />
             <property name="enableDeleteByPrimaryKey" value="true" />
             <property name="enableUpdateByPrimaryKeySelective" value="true" />
@@ -75,7 +76,7 @@
 		
 		<!-- 生成全部的表 -->
 		<!-- <table tableName="%" /> -->
-		<table tableName="sys_%" />
+		<table tableName="sys_menu" />
 		
 	</context>
 </generatorConfiguration>
