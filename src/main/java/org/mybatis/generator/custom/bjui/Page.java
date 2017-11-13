@@ -24,7 +24,7 @@ import java.util.List;
  * @author wujing
  * @param <T>
  */
-public class PageBjui<T extends Serializable> implements Serializable {
+public class Page<T extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = -5764853545343945831L;
 
@@ -76,7 +76,7 @@ public class PageBjui<T extends Serializable> implements Serializable {
 	/**
 	 * 默认构造函数
 	 */
-	public PageBjui() {
+	public Page() {
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class PageBjui<T extends Serializable> implements Serializable {
 	 * @param pageSize
 	 * @param list
 	 */
-	public PageBjui(int totalCount, int totalPage, int pageCurrent, int pageSize, List<T> list) {
+	public Page(int totalCount, int totalPage, int pageCurrent, int pageSize, List<T> list) {
 		this.totalCount = totalCount;
 		this.totalPage = totalPage;
 		this.pageCurrent = pageCurrent;

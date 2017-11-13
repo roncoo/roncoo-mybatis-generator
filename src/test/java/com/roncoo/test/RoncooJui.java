@@ -26,7 +26,7 @@ public class RoncooJui {
 		logger.info("Start generator ...");
 		List<String> warnings = new ArrayList<String>();
 		boolean overwrite = true; // 是否覆盖原来的文件
-		File configFile = new File("D:/workspace-roncoo/roncoo-mybatis-generator/src/test/resources/roncoo-jui.xml");
+		File configFile = new File("D:/workspace/roncoo-mybatis-generator/src/test/resources/roncoo-jui.xml");
 		ConfigurationParser cp = new ConfigurationParser(warnings);
 		Configuration config = cp.parseConfiguration(configFile);
 		DefaultShellCallback callback = new DefaultShellCallback(overwrite);

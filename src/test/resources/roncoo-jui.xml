@@ -20,6 +20,26 @@
 			<property name="annotationClass" value="${AnnotationPlugin.annotationClass}" />
 			<property name="annotationName" value="${AnnotationPlugin.annotationName}" />
 		</plugin>
+		
+		<plugin type="org.mybatis.generator.plugins.DaoPlugin">
+            <property name="targetPackage" value="${javaDaoGenerator.targetPackage}" />
+            <property name="implementationPackage" value="${javaDaoGenerator.targetPackage}.impl" />
+            <property name="targetProject" value="${javaDaoGenerator.targetProject}" />
+            <property name="pageUtilPath" value="${javaDaoGenerator.pageUtilPath}" />
+            <property name="enableInsertSelective" value="true" />
+            <property name="enableDeleteByPrimaryKey" value="true" />
+            <property name="enableUpdateByPrimaryKeySelective" value="true" />
+            <property name="enableSelectByPrimaryKey" value="true" />
+            <property name="enablePage" value="true" />
+            <property name="enableSelectByExample" value="false" />
+            <property name="enableCount" value="false" />
+
+            <property name="enableInsert" value="false" />
+            <property name="enableUpdateByExampleSelective" value="false" />
+            <property name="enableUpdateByPrimaryKey" value="false" />
+            <property name="enableDeleteByExample" value="false" />
+            <property name="enableUpdateByExample" value="false" />
+        </plugin>
 
 		<commentGenerator>
 			<!-- 是否去除自动生成的注释，默认false，true：去除；false：不去除 -->
@@ -57,7 +77,7 @@
 		<!-- 生成全部的表 -->
 		<!-- <table tableName="%" /> -->
 		
-		<table tableName="rc_report"></table>
+		<table tableName="%"></table>
 		
 	</context>
 </generatorConfiguration>

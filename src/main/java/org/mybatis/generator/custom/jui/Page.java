@@ -24,7 +24,7 @@ import java.util.List;
  * @author wujing
  * @param <T>
  */
-public class PageJui<T extends Serializable> implements Serializable {
+public class Page<T extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -62,6 +62,9 @@ public class PageJui<T extends Serializable> implements Serializable {
 	 * 排序方式：asc or desc
 	 */
 	private String orderDirection;
+	
+	public Page() {
+	}
 
 	/**
 	 * 构造函数
@@ -74,7 +77,7 @@ public class PageJui<T extends Serializable> implements Serializable {
 	 * @param pageSize
 	 * @param list
 	 */
-	public PageJui(int totalCount, int totalPage, int currentPage, int numPerPage, List<T> list) {
+	public Page(int totalCount, int totalPage, int currentPage, int numPerPage, List<T> list) {
 		this.totalCount = totalCount;
 		this.totalPage = totalPage;
 		this.currentPage = currentPage;

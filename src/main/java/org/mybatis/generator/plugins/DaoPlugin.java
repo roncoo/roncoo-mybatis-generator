@@ -22,7 +22,7 @@ import org.mybatis.generator.internal.util.StringUtility;
  */
 public class DaoPlugin extends PluginAdapter {
 
-	private String pageUtilPath = "org.mybatis.generator.custom.util.PageBjui";
+	private String pageUtilPath = "org.mybatis.generator.custom.util.Page";
 	private FullyQualifiedJavaType serviceType;
 	private FullyQualifiedJavaType daoType;
 	private FullyQualifiedJavaType interfaceType;
@@ -382,7 +382,7 @@ public class DaoPlugin extends PluginAdapter {
 	protected Method listForPage(IntrospectedTable introspectedTable, String tableName) {
 		Method method = new Method();
 		method.setName("listForPage");
-		method.setReturnType(new FullyQualifiedJavaType("PageBjui<" + tableName + ">"));
+		method.setReturnType(new FullyQualifiedJavaType("Page<" + tableName + ">"));
 		FullyQualifiedJavaType type = new FullyQualifiedJavaType("int");
 		method.addParameter(new Parameter(type, "pageCurrent"));
 		method.addParameter(new Parameter(type, "pageSize"));
@@ -399,7 +399,7 @@ public class DaoPlugin extends PluginAdapter {
 		method.addBodyLine("example.setLimitStart(PageUtil.countOffset(pageCurrent, pageSize));");
 		method.addBodyLine("example.setPageSize(pageSize);");
 		StringBuilder sbs = new StringBuilder();
-		sbs.append("return new PageBjui<" + tableName + ">(");
+		sbs.append("return new Page<" + tableName + ">(");
 		sbs.append("count, totalPage, pageCurrent, pageSize, this.");
 		sbs.append(getDaoShort());
 		sbs.append("selectByExample(example));");
