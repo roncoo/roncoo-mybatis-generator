@@ -29,7 +29,7 @@ import ${superControllerClassPackage};
 #else
 @Controller
 #end
-@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+@RequestMapping(value = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
 #if(${superControllerClass})
 public class ${table.controllerName} extends ${superControllerClass} {
 #else
@@ -41,7 +41,7 @@ public class ${table.controllerName} {
 	@Autowired
 	private ${entity}Service service;
 	
-	@RequestMapping("/list")
+	@RequestMapping(value = "/list")
 	public void list(@RequestParam(value = "pageCurrent", defaultValue = "1") int pageCurrent, @RequestParam(value = "pageSize", defaultValue = "20") int pageSize, @ModelAttribute ${entity}QO qo, ModelMap modelMap){
 		modelMap.put("page", service.listForPage(pageCurrent, pageSize, qo));
 		modelMap.put("pageCurrent", pageCurrent);
@@ -49,13 +49,13 @@ public class ${table.controllerName} {
 		modelMap.put("bean", qo);
 	}
 	
-	@RequestMapping("/add")
+	@RequestMapping(value = "/add")
 	public void add(){
 	
 	}
 	
 	@ResponseBody
-	@RequestMapping("/save")
+	@RequestMapping(value = "/save")
 	public String save(@ModelAttribute ${entity}QO qo){
 		if (service.save(qo) > 0) {
 			return success(TARGETID);
@@ -64,7 +64,7 @@ public class ${table.controllerName} {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/delete")
+	@RequestMapping(value = "/delete")
 	public String delete(@RequestParam(value = "id") Long id){
 		if (service.deleteById(id) > 0) {
 			return delete(TARGETID);
@@ -72,13 +72,13 @@ public class ${table.controllerName} {
 		return error("删除失败");
 	}
 	
-	@RequestMapping("/edit")
+	@RequestMapping(value = "/edit")
 	public void edit(@RequestParam(value = "id") Long id, ModelMap modelMap){
 		modelMap.put("bean", service.getById(id));
 	}
 	
 	@ResponseBody
-	@RequestMapping("/update")
+	@RequestMapping(value = "/update")
 	public String update(@ModelAttribute ${entity}QO qo){
 		if (service.updateById(qo) > 0) {
 			return success(TARGETID);
@@ -86,7 +86,7 @@ public class ${table.controllerName} {
 		return error("修改失败");
 	}
 	
-	@RequestMapping("/view")
+	@RequestMapping(value = "/view")
 	public void view(@RequestParam(value = "id") Long id, ModelMap modelMap){
 		modelMap.put("bean", service.getById(id));
 	}

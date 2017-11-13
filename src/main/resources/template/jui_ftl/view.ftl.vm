@@ -1,0 +1,22 @@
+<#assign base=request.contextPath /> 
+<div class="pageContent">
+    <div class="pageFormContent" layoutH="58">
+#set($bg='${bean.')
+#set($ed='}')
+#foreach($field in ${table.fields})
+#set($keyPropertyName=${field.propertyName})
+#if(${field.keyIdentityFlag})
+## 主键不生成
+#elseif(${field.convert})
+        <p>
+            <label>${field.comment}：</label>${bg}${keyPropertyName}${ed}
+        </p>
+#end
+#end
+    </div>
+    <div class="formBar">
+        <ul>
+            <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+        </ul>
+    </div>
+</div>
