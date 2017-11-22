@@ -25,6 +25,7 @@
             <property name="targetPackage" value="${javaDaoGenerator.targetPackage}" />
             <property name="implementationPackage" value="${javaDaoGenerator.targetPackage}.impl" />
             <property name="targetProject" value="${javaDaoGenerator.targetProject}" />
+            <property name="pagePath" value="${javaDaoGenerator.pagePath}" />
             <property name="pageUtilPath" value="${javaDaoGenerator.pageUtilPath}" />
             <property name="enableInsertSelective" value="true" />
             <property name="enableDeleteByPrimaryKey" value="true" />

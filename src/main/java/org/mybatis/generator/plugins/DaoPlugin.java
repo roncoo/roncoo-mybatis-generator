@@ -22,7 +22,8 @@ import org.mybatis.generator.internal.util.StringUtility;
  */
 public class DaoPlugin extends PluginAdapter {
 
-	private String pageUtilPath = "org.mybatis.generator.custom.util.Page";
+	private String pagePath = "org.mybatis.generator.custom.util.Page";
+	private String pageUtilPath = "org.mybatis.generator.custom.util.PageUtil";
 	private FullyQualifiedJavaType serviceType;
 	private FullyQualifiedJavaType daoType;
 	private FullyQualifiedJavaType interfaceType;
@@ -72,6 +73,7 @@ public class DaoPlugin extends PluginAdapter {
 	@Override
 	public boolean validate(List<String> warnings) {
 
+		pagePath = properties.getProperty("pagePath");
 		pageUtilPath = properties.getProperty("pageUtilPath");
 
 		String enableAnnotation = properties.getProperty("enableAnnotation");
@@ -184,7 +186,7 @@ public class DaoPlugin extends PluginAdapter {
 		listType = new FullyQualifiedJavaType("java.util.List");
 
 		// 【com.roncoo.pay.common.custom.bjui.PageBjui】
-		pageType = new FullyQualifiedJavaType(pageUtilPath);
+		pageType = new FullyQualifiedJavaType(pagePath);
 
 		// 【com.roncoo.pay.common.custom.bjui.PageUtil】
 		pageUtilType = new FullyQualifiedJavaType(pageUtilPath);
@@ -200,9 +202,6 @@ public class DaoPlugin extends PluginAdapter {
 
 		// 实现类
 		addServiceImpl(topLevelClass, introspectedTable, tableName, files);
-
-		// 日志类
-		// addLogger(topLevelClass); // 项目需要可以添加
 
 		return files;
 	}
@@ -451,7 +450,6 @@ public class DaoPlugin extends PluginAdapter {
 		}
 		method.setVisibility(JavaVisibility.PUBLIC);
 		StringBuilder sb = new StringBuilder();
-		// method.addBodyLine("try {");
 		sb.append("return this.");
 		sb.append(getDaoShort());
 		sb.append("selectByPrimaryKey");
@@ -463,10 +461,6 @@ public class DaoPlugin extends PluginAdapter {
 		sb.setLength(sb.length() - 1);
 		sb.append(");");
 		method.addBodyLine(sb.toString());
-		// method.addBodyLine("} catch (Exception e) {");
-		// method.addBodyLine("logger.error(\"Exception: \", e);");
-		// method.addBodyLine("return null;");
-		// method.addBodyLine("}");
 		return method;
 	}
 
@@ -488,8 +482,6 @@ public class DaoPlugin extends PluginAdapter {
 		sb.append("example");
 		sb.append(");");
 		method.addBodyLine(sb.toString());
-		// method.addBodyLine("logger.debug(\"count: {}\", count);");
-		// method.addBodyLine("return count;");
 		return method;
 	}
 
@@ -511,7 +503,6 @@ public class DaoPlugin extends PluginAdapter {
 		String params = addParams(introspectedTable, method, type);
 		method.setVisibility(JavaVisibility.PUBLIC);
 		StringBuilder sb = new StringBuilder();
-		// method.addBodyLine("try {");
 		sb.append("return this.");
 		sb.append(getDaoShort());
 		if (introspectedTable.hasBLOBColumns() && (!"updateByPrimaryKeySelective".equals(methodName) && !"deleteByPrimaryKey".equals(methodName) && !"deleteByExample".equals(methodName) && !"updateByExampleSelective".equals(methodName))) {
@@ -726,7 +717,6 @@ public class DaoPlugin extends PluginAdapter {
 			interfaces.addImportedType(pageType);
 		}
 		interfaces.addImportedType(pojoType);
-		// interfaces.addImportedType(pojoCriteriaType);
 
 		// 实现类
 		if (enableSelectByExample) {
@@ -741,10 +731,6 @@ public class DaoPlugin extends PluginAdapter {
 		topLevelClass.addImportedType(daoType); // mapper
 		topLevelClass.addImportedType(interfaceType);
 		topLevelClass.addImportedType(pojoType);
-
-		// topLevelClass.addImportedType(pojoCriteriaType);
-		// topLevelClass.addImportedType(slf4jLogger);
-		// topLevelClass.addImportedType(slf4jLoggerFactory);
 
 		if (enableAnnotation) {
 			topLevelClass.addImportedType(service);

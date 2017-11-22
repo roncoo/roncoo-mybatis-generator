@@ -25,13 +25,14 @@
             <property name="targetPackage" value="${javaDaoGenerator.targetPackage}" />
             <property name="implementationPackage" value="${javaDaoGenerator.targetPackage}.impl" />
             <property name="targetProject" value="${javaDaoGenerator.targetProject}" />
+            <property name="pagePath" value="${javaDaoGenerator.pagePath}" />
             <property name="pageUtilPath" value="${javaDaoGenerator.pageUtilPath}" />
             <property name="enableInsertSelective" value="true" />
             <property name="enableDeleteByPrimaryKey" value="true" />
             <property name="enableUpdateByPrimaryKeySelective" value="true" />
             <property name="enableSelectByPrimaryKey" value="true" />
             <property name="enablePage" value="true" />
-            <property name="enableSelectByExample" value="false" />
+            <property name="enableSelectByExample" value="true" />
             <property name="enableCount" value="false" />
 
             <property name="enableInsert" value="false" />
@@ -77,7 +78,7 @@
 		<!-- 生成全部的表 -->
 		<!-- <table tableName="%" /> -->
 		
-		<table tableName="%"></table>
+		<table tableName="web_%"></table>
 		
 	</context>
 </generatorConfiguration>
