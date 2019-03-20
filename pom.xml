@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.roncoo</groupId>
-	<artifactId>roncoo-cloud-generator</artifactId>
+	<artifactId>roncoo-education-generator</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0.0</version>
 
-	<name>roncoo-cloud-generator</name>
+	<name>roncoo-education-generator</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
