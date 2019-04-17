@@ -21,7 +21,7 @@
 			<property name="annotationName" value="${AnnotationPlugin.annotationName}" />
 		</plugin>
 		
-		<plugin type="org.mybatis.generator.plugins.DaoPlugin">
+		<!-- <plugin type="org.mybatis.generator.plugins.DaoPlugin">
             <property name="targetPackage" value="${javaDaoGenerator.targetPackage}" />
             <property name="implementationPackage" value="${javaDaoGenerator.targetPackage}.impl" />
             <property name="targetProject" value="${javaDaoGenerator.targetProject}" />
@@ -42,7 +42,7 @@
             <property name="enableUpdateByPrimaryKey" value="false" />
             <property name="enableDeleteByExample" value="false" />
             <property name="enableUpdateByExample" value="false" />
-        </plugin>
+        </plugin> -->
 
 		<commentGenerator>
 			<!-- 是否去除自动生成的注释，默认false，true：去除；false：不去除 -->
@@ -78,7 +78,7 @@
 		</javaClientGenerator>
 		
 		<!-- 生成全部的表 -->
-		<table tableName="course_chapter_period_audit" />
+		<table tableName="crontab_plan_polyv" />
 		
 	</context>
 </generatorConfiguration>

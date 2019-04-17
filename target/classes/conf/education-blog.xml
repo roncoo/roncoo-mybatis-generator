@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
 	<!-- 配置文件 -->
-	<properties resource="conf/education-activity.properties" />
+	<properties resource="conf/education-blog.properties" />
 
 	<!-- 数据库的JDBC驱动 -->
 	<classPathEntry location="${driver.path}" />
@@ -51,7 +51,7 @@
 		<!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer; true，把JDBC DECIMAL和 
 			NUMERIC 类型解析为java.math.BigDecimal -->
 		<javaTypeResolver>
-			<property name="forceBigDecimals" value="false" />
+			<property name="forceBigDecimals" value="true" />
 		</javaTypeResolver>
 
 		<!-- targetProject:自动生成代码的位置 -->
@@ -78,7 +78,7 @@
 
 		<!-- 生成全部的表 -->
 
-		<table tableName="act_coupon_user" />
+		<table tableName="blog" />
 
 	</context>
 </generatorConfiguration>
