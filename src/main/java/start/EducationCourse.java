@@ -24,7 +24,7 @@ public class EducationCourse {
 		logger.info("Start generator ...");
 		List<String> warnings = new ArrayList<String>();
 		boolean overwrite = true; 
-		File configFile = new File("C:\\roncoo_education\\roncoo-education-generator\\src\\main\\resources\\conf\\education-course.xml");
+		File configFile = new File("D:\\WorkSpace\\WorkSpace-roncoo\\roncoo-education-generator\\src\\main\\resources\\conf\\education-course.xml");
 		ConfigurationParser cp = new ConfigurationParser(warnings);
 		Configuration config = cp.parseConfiguration(configFile);
 		DefaultShellCallback callback = new DefaultShellCallback(overwrite);

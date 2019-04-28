@@ -17,14 +17,14 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 /**
  * @author wujing
  */
-public class EducationBlog {
-	private static Logger logger = Logger.getLogger(EducationBlog.class);
+public class EducationCommunity {
+	private static Logger logger = Logger.getLogger(EducationCommunity.class);
 
 	public static void main(String[] args) throws IOException, XMLParserException, InvalidConfigurationException, SQLException, InterruptedException {
 		logger.info("Start generator ...");
 		List<String> warnings = new ArrayList<String>();
 		boolean overwrite = true;
-		File configFile = new File("C:\\roncoo_education\\roncoo-education-generator\\src\\main\\resources\\conf\\education-blog.xml");
+		File configFile = new File("D:\\WorkSpace\\WorkSpace-roncoo\\roncoo-education-generator\\src\\main\\resources\\conf\\education-community.xml");
 		ConfigurationParser cp = new ConfigurationParser(warnings);
 		Configuration config = cp.parseConfiguration(configFile);
 		DefaultShellCallback callback = new DefaultShellCallback(overwrite);

@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
 	<!-- 配置文件 -->
-	<properties resource="conf/education-blog.properties" />
+	<properties resource="conf/education-community.properties" />
 
 	<!-- 数据库的JDBC驱动 -->
 	<classPathEntry location="${driver.path}" />
@@ -21,7 +21,7 @@
 			<property name="annotationName" value="${AnnotationPlugin.annotationName}" />
 		</plugin>
 
-		  <plugin type="org.mybatis.generator.plugins.DaoPlugin"> 
+		   <plugin type="org.mybatis.generator.plugins.DaoPlugin"> 
 			  <property name="targetPackage" value="${javaDaoGenerator.targetPackage}" /> <property 
 				name="implementationPackage" value="${javaDaoGenerator.targetPackage}.impl" 
 				/> <property name="targetProject" value="${javaDaoGenerator.targetProject}" 
@@ -78,7 +78,15 @@
 
 		<!-- 生成全部的表 -->
 
-		<table tableName="blog" />
+		 <table tableName="questions_%" />
+		<!-- 一个表存在两个大字段时候要加 
+		    questions  == 表名
+		    column  ==大字段名
+		     <table domainObjectName="Questions" tableName="questions">  
+	             <columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR" />  
+	             <columnOverride column="good_content" javaType="java.lang.String" jdbcType="VARCHAR" />  
+       		 </table> 
+         -->
 
 	</context>
 </generatorConfiguration>
