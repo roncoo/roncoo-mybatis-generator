@@ -21,7 +21,7 @@
 			<property name="annotationName" value="${AnnotationPlugin.annotationName}" />
 		</plugin>
 
-		   <plugin type="org.mybatis.generator.plugins.DaoPlugin"> 
+		    <plugin type="org.mybatis.generator.plugins.DaoPlugin"> 
 			  <property name="targetPackage" value="${javaDaoGenerator.targetPackage}" /> <property 
 				name="implementationPackage" value="${javaDaoGenerator.targetPackage}.impl" 
 				/> <property name="targetProject" value="${javaDaoGenerator.targetProject}" 
@@ -36,7 +36,7 @@
 				name="enableInsert" value="false" /> <property name="enableUpdateByExampleSelective" 
 				value="true" /> <property name="enableUpdateByPrimaryKey" value="false" /> 
 				<property name="enableDeleteByExample" value="false" /> <property name="enableUpdateByExample" value="false" />
-			</plugin>
+			</plugin> 
 
 		<commentGenerator>
 			<!-- 是否去除自动生成的注释，默认false，true：去除；false：不去除 -->
@@ -78,7 +78,7 @@
 
 		<!-- 生成全部的表 -->
 
-		 <table tableName="questions_%" />
+		 <table tableName="article_recommend" />
 		<!-- 一个表存在两个大字段时候要加 
 		    questions  == 表名
 		    column  ==大字段名

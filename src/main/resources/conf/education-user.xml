@@ -78,8 +78,7 @@
 		</javaClientGenerator>
 		
 		<!-- 生成全部的表 -->
-		<table tableName="lecturer_audit" />
-		<table tableName="lecturer" />
+		<table tableName="user_ext" />
 		
 	</context>
 </generatorConfiguration>

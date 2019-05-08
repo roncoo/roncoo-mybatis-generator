@@ -78,7 +78,7 @@
 		</javaClientGenerator>
 		
 		<!-- 生成全部的表 -->
-		<table tableName="crontab_plan_polyv" />
+		<table tableName="course_accessory" />
 		
 	</context>
 </generatorConfiguration>
