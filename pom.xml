@@ -29,7 +29,6 @@
 			<version>2.6</version>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<finalName>mybatis-generator</finalName>
 		<plugins>
