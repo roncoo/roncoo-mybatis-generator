@@ -145,7 +145,6 @@ public class MyBatisGenerator {
      *            a set of Strings containing context ids to run. Only the
      *            contexts with an id specified in this list will be run. If the
      *            list is null or empty, than all contexts are run.
-     * @throws InvalidConfigurationException
      * @throws SQLException
      * @throws IOException
      * @throws InterruptedException
@@ -175,7 +174,6 @@ public class MyBatisGenerator {
      *            "bar", then the fully qualified table name is "foo.bar". If
      *            the Set is null or empty, then all tables in the configuration
      *            will be used for code generation.
-     * @throws InvalidConfigurationException
      * @throws SQLException
      * @throws IOException
      * @throws InterruptedException

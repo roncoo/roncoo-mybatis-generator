@@ -28,16 +28,14 @@ import com.roncoo.mybatis.generator.api.PluginAdapter;
  * To use the plugin, add a property to the table configuration specifying a
  * comma delimited list of column names to use as a primary key:
  * 
- * <table...>
- *   <property name="virtualKeyColumns" value="ID1,ID2"/>
- * </table>
  * 
  * @author Jeff Butler
  * 
  */
 public class VirtualPrimaryKeyPlugin extends PluginAdapter {
 
-    public boolean validate(List<String> warnings) {
+    @Override
+	public boolean validate(List<String> warnings) {
         return true;
     }
 

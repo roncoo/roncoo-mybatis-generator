@@ -27,7 +27,6 @@ public interface DAOMethodNameCalculator {
     /**
      * Calculates and returns a name for the insert method.
      * 
-     * @param introspectedTable
      * @return the calculated name
      */
     String getInsertMethodName(IntrospectedTable introspectedTable);

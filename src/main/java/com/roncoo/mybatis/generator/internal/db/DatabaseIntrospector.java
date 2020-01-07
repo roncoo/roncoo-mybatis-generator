@@ -153,7 +153,7 @@ public class DatabaseIntrospector {
     }
 
     /**
-     * Returns a List<IntrospectedTable> that matches the specified table
+     * Returns a List that matches the specified table
      * configuration.
      * 
      * @param tc

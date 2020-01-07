@@ -98,9 +98,13 @@
 				<executions>
 					<execution>
 						<phase>package</phase>
+						<id>attach-javadocs</id>
 						<goals>
 							<goal>jar</goal>
 						</goals>
+						<configuration>
+							<additionalparam>-Xdoclint:none</additionalparam>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -136,16 +140,14 @@
 	</build>
 
 	<distributionManagement>
-		<repository>
-			<id>nexus-releases</id>
-			<name>Nexus Release Repository</name>
-			<url>http://192.168.1.221:8081/nexus/content/repositories/releases/</url>
-		</repository>
 		<snapshotRepository>
-			<id>nexus-snapshots</id>
-			<name>Nexus Snapshot Repository</name>
-			<url>http://192.168.1.221:8081/nexus/content/repositories/snapshots/</url>
+			<id>oss-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
+		<repository>
+			<id>oss-maven2</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
 	</distributionManagement>
 
 </project>

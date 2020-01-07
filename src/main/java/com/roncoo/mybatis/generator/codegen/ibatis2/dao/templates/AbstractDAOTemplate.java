@@ -370,7 +370,7 @@ public abstract class AbstractDAOTemplate {
      * sqlMapClient.insert(\"{0}.{1}\", {2});
      * 
      * Overriding methods should call the
-     * <code>setInsertMethodTemplate(String)</code method to set the template.
+     * <code>setInsertMethodTemplate(String)</code> method to set the template.
      * 
      */
     protected abstract void configureInsertMethodTemplate();
@@ -391,7 +391,7 @@ public abstract class AbstractDAOTemplate {
      * sqlMapClient.queryForList(\"{0}.{1}\", {2});
      * 
      * Overriding methods should call the
-     * <code>setQueryForListMethodTemplate(String)</code method to set the
+     * <code>setQueryForListMethodTemplate(String)</code> method to set the
      * template.
      */
     protected abstract void configureQueryForListMethodTemplate();
@@ -412,7 +412,7 @@ public abstract class AbstractDAOTemplate {
      * sqlMapClient.queryForObject(\"{0}.{1}\", {2});
      * 
      * Overriding methods should call the
-     * <code>setQueryForObjectMethodTemplate(String)</code method to set the
+     * <code>setQueryForObjectMethodTemplate(String)</code> method to set the
      * template.
      */
     protected abstract void configureQueryForObjectMethodTemplate();
@@ -433,7 +433,7 @@ public abstract class AbstractDAOTemplate {
      * sqlMapClient.update(\"{0}.{1}\", {2});
      * 
      * Overriding methods should call the
-     * <code>setUpdateMethodTemplate(String)</code method to set the template.
+     * <code>setUpdateMethodTemplate(String)</code> method to set the template.
      */
     protected abstract void configureUpdateMethodTemplate();
 
@@ -453,7 +453,7 @@ public abstract class AbstractDAOTemplate {
      * sqlMapClient.delete(\"{0}.{1}\", {2});
      * 
      * Overriding methods should call the
-     * <code>setDeleteMethodTemplate(String)</code method to set the template.
+     * <code>setDeleteMethodTemplate(String)</code> method to set the template.
      */
     protected abstract void configureDeleteMethodTemplate();
 }

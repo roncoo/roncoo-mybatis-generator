@@ -34,9 +34,9 @@ public class JavaBeansUtil {
     /**
      * JavaBeans rules:
      * 
-     * eMail > geteMail() firstName > getFirstName() URL > getURL() XAxis >
-     * getXAxis() a > getA() B > invalid - this method assumes that this is not
-     * the case. Call getValidPropertyName first. Yaxis > invalid - this method
+     * eMail  geteMail() firstName  getFirstName() URL  getURL() XAxis 
+     * getXAxis() a  getA() B  invalid - this method assumes that this is not
+     * the case. Call getValidPropertyName first. Yaxis  invalid - this method
      * assumes that this is not the case. Call getValidPropertyName first.
      * 
      * @param property
@@ -66,9 +66,9 @@ public class JavaBeansUtil {
     /**
      * JavaBeans rules:
      * 
-     * eMail > seteMail() firstName > setFirstName() URL > setURL() XAxis >
-     * setXAxis() a > setA() B > invalid - this method assumes that this is not
-     * the case. Call getValidPropertyName first. Yaxis > invalid - this method
+     * eMail  seteMail() firstName  setFirstName() URL  setURL() XAxis 
+     * setXAxis() a  setA() B  invalid - this method assumes that this is not
+     * the case. Call getValidPropertyName first. Yaxis  invalid - this method
      * assumes that this is not the case. Call getValidPropertyName first.
      * 
      * @param property
@@ -138,8 +138,8 @@ public class JavaBeansUtil {
      * case, and the second character is lower case, then the first character
      * should be made lower case
      * 
-     * eMail > eMail firstName > firstName URL > URL XAxis > XAxis a > a B > b
-     * Yaxis > yaxis
+     * eMail  eMail firstName  firstName URL  URL XAxis  XAxis a  a B  b
+     * Yaxis  yaxis
      * 
      * @param inputString
      * @return the valid property name
